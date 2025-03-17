@@ -67,13 +67,6 @@ const nextConfig = {
     ],
   },
 
-  // Configuration de l'internationalisation (si nécessaire)
-  i18n: {
-    locales: ['fr', 'en'],
-    defaultLocale: 'fr',
-    localeDetection: true,
-  },
-
   // Configuration des headers HTTP
   async headers() {
     return [
