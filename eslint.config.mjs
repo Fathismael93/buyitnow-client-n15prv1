@@ -179,8 +179,8 @@ if (isProd) {
     linterOptions: {
       reportUnusedDisableDirectives: true,
       noInlineConfig: false, // Permet l'utilisation de /* eslint-disable */ dans le code
-      cache: true,
-      cacheLocation: '.eslintcache',
+      // cache: true,
+      // cacheLocation: '.eslintcache',
     },
   });
 }
