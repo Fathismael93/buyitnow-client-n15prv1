@@ -14,9 +14,7 @@ export const getAllProducts = async (searchParams) => {
 
   const searchQuery = queryString.stringify(urlParams);
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/products?${searchQuery}`,
-  );
+  const res = await fetch(`${process.env.API_URL}/api/products?${searchQuery}`);
 
   const data = await res.json();
 
