@@ -16,16 +16,7 @@ export const getAllProducts = async (searchParams) => {
 
   const res = await fetch(`${process.env.API_URL}/api/products?${searchQuery}`);
 
-  await res
-    .json()
-    .then((result) => {
-      console.log('Result');
-      console.log(result);
-    })
-    .catch((err) => {
-      console.log('Error');
-      console.log(err);
-    });
+  const data = await res.json();
 
-  return [];
+  return data;
 };
