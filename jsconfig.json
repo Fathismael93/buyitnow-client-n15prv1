@@ -35,6 +35,8 @@
     "build",
     "dist",
     ".vercel",
-    "public"
+    "public",
+    "**/*.test.js",
+    "**/*.spec.js"
   ]
 }
