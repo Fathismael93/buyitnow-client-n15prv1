@@ -1,7 +1,7 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
 import React, { memo } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import ResponsivePaginationComponent from 'react-responsive-pagination';
 import 'react-responsive-pagination/themes/classic.css';
 

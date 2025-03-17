@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+import React from 'react';
 import dynamic from 'next/dynamic';
 
 import { GlobalProvider } from './GlobalProvider';
