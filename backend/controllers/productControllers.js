@@ -4,6 +4,7 @@ import APIFilters from '../utils/APIFilters';
 
 export const getProducts = async (req, res) => {
   try {
+    console.log('We are in the getProducts controllers');
     const resPerPage = 2;
 
     const apiFilters = new APIFilters(Product.find(), req.query)
@@ -21,6 +22,8 @@ export const getProducts = async (req, res) => {
     const totalPages = Number.isInteger(result) ? result : Math.ceil(result);
 
     const categories = await Category.find();
+
+    console.log('We are sending response');
 
     return res.status(200).json({
       categories,
