@@ -110,7 +110,7 @@ export const AuthProvider = ({ children }) => {
 
   const addNewAddress = async (address) => {
     try {
-      const res = await fetch(`${process.env.API_URL}/api/address`, {
+      const res = await fetch(`/api/address`, {
         method: 'POST',
         body: JSON.stringify(address),
       });
