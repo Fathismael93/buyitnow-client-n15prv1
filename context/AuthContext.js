@@ -17,18 +17,15 @@ export const AuthProvider = ({ children }) => {
 
   const registerUser = async ({ name, phone, email, password }) => {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            name,
-            phone,
-            email,
-            password,
-          }),
-        },
-      );
+      const res = await fetch(`${process.env.API_URL}/api/auth/register`, {
+        method: 'POST',
+        body: JSON.stringify({
+          name,
+          phone,
+          email,
+          password,
+        }),
+      });
 
       const data = await res.json();
 
@@ -64,13 +61,10 @@ export const AuthProvider = ({ children }) => {
     try {
       setLoading(true);
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/me/update`,
-        {
-          method: 'PUT',
-          body: formData,
-        },
-      );
+      const res = await fetch(`${process.env.API_URL}/api/auth/me/update`, {
+        method: 'PUT',
+        body: formData,
+      });
 
       const data = await res.json();
 
@@ -91,7 +85,7 @@ export const AuthProvider = ({ children }) => {
   const updatePassword = async ({ currentPassword, newPassword }) => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/me/update_password`,
+        `${process.env.API_URL}/api/auth/me/update_password`,
         {
           method: 'PUT',
           body: JSON.stringify({
@@ -116,13 +110,10 @@ export const AuthProvider = ({ children }) => {
 
   const addNewAddress = async (address) => {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/address`,
-        {
-          method: 'POST',
-          body: JSON.stringify(address),
-        },
-      );
+      const res = await fetch(`${process.env.API_URL}/api/address`, {
+        method: 'POST',
+        body: JSON.stringify(address),
+      });
 
       const data = await res.json();
 
@@ -140,13 +131,10 @@ export const AuthProvider = ({ children }) => {
 
   const updateAddress = async (id, address) => {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/address/${id}`,
-        {
-          method: 'PUT',
-          body: JSON.stringify(address),
-        },
-      );
+      const res = await fetch(`${process.env.API_URL}/api/address/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(address),
+      });
 
       const data = await res.json();
 
@@ -165,12 +153,9 @@ export const AuthProvider = ({ children }) => {
 
   const deleteAddress = async (id) => {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/address/${id}`,
-        {
-          method: 'DELETE',
-        },
-      );
+      const res = await fetch(`${process.env.API_URL}/api/address/${id}`, {
+        method: 'DELETE',
+      });
 
       const data = await res.json();
 
@@ -188,7 +173,7 @@ export const AuthProvider = ({ children }) => {
 
   const sendEmail = async (newEmail) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/emails`, {
+      const res = await fetch(`${process.env.API_URL}/api/emails`, {
         method: 'POST',
         body: JSON.stringify(newEmail),
       });

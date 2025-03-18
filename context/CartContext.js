@@ -16,7 +16,7 @@ export const CartProvider = ({ children }) => {
 
   const setCartToState = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`);
+      const res = await fetch(`${process.env.API_URL}/api/cart`);
       const data = await res.json();
 
       if (data) {
@@ -30,7 +30,7 @@ export const CartProvider = ({ children }) => {
 
   const addItemToCart = async ({ product }) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`, {
+      const res = await fetch(`${process.env.API_URL}/api/cart`, {
         method: 'POST',
         body: JSON.stringify({
           productId: product,
@@ -57,7 +57,7 @@ export const CartProvider = ({ children }) => {
       toast.error("It's only 1 unit ! Remove this item if you don't want it !");
     } else {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`, {
+        const res = await fetch(`${process.env.API_URL}/api/cart`, {
           method: 'PUT',
           body: JSON.stringify({
             product,
@@ -88,12 +88,9 @@ export const CartProvider = ({ children }) => {
     try {
       setLoading(true);
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/${id}`,
-        {
-          method: 'DELETE',
-        },
-      );
+      const res = await fetch(`${process.env.API_URL}/api/cart/${id}`, {
+        method: 'DELETE',
+      });
 
       const data = await res.json();
 
