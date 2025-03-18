@@ -10,6 +10,8 @@ import onError from '@/backend/middlewares/errors';
 
 const router = createRouter();
 
+console.log('We are in address api');
+
 dbConnect();
 
 router.use(isAuthenticatedUser).get(getAddresses);
