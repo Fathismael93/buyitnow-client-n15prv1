@@ -110,7 +110,7 @@ export const AuthProvider = ({ children }) => {
 
   const addNewAddress = async (address) => {
     try {
-      const res = await fetch(`/api/address`, {
+      const res = await fetch(`${process.env.API_URL}/api/address`, {
         method: 'POST',
         body: JSON.stringify(address),
       });
@@ -131,7 +131,9 @@ export const AuthProvider = ({ children }) => {
 
   const updateAddress = async (id, address) => {
     try {
-      const res = await fetch(`/api/address/${id}`, {
+      console.log('API URL');
+      console.log(process.env.API_URL);
+      const res = await fetch(`${process.env.API_URL}/api/address/${id}`, {
         method: 'PUT',
         body: JSON.stringify(address),
       });
@@ -153,7 +155,7 @@ export const AuthProvider = ({ children }) => {
 
   const deleteAddress = async (id) => {
     try {
-      const res = await fetch(`/api/address/${id}`, {
+      const res = await fetch(`${process.env.API_URL}/api/address/${id}`, {
         method: 'DELETE',
       });
 
