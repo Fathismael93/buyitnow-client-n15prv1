@@ -21,10 +21,13 @@ export const OrderProvider = ({ children }) => {
 
   const addOrder = async (orderInfo) => {
     try {
-      const res = await fetch(`${process.env.API_URL}/api/orders/webhook`, {
-        method: 'POST',
-        body: JSON.stringify(orderInfo),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/orders/webhook`,
+        {
+          method: 'POST',
+          body: JSON.stringify(orderInfo),
+        },
+      );
 
       const data = await res.json();
 
