@@ -7,7 +7,7 @@ export default withAuth(
     const url = req.nextUrl.pathname;
     const user = req?.nextauth?.token?.user;
 
-    if (url.match('/')) {
+    if (url.startsWith('/api/products')) {
       console.log('url in middleware.js');
       console.log(url);
     }
