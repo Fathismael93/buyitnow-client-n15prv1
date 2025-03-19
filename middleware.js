@@ -7,10 +7,8 @@ export default withAuth(
     const url = req.nextUrl.pathname;
     const user = req?.nextauth?.token?.user;
 
-    if (url.startsWith('/api/products')) {
-      console.log('url in middleware.js');
-      console.log(url);
-    }
+    console.log('req in middleware.js');
+    console.log(req);
 
     if (url.startsWith('/api')) {
       NextResponse.next().headers.append('Access-Control-Allow-Origin', '*');
