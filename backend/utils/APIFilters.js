@@ -22,18 +22,30 @@ class APIFilters {
 
   filter() {
     console.log('WE ARE IN THE BEGINNING OF THE FILTER METHOD');
+
     console.log('QUERY STRING IN FILTER METHOD');
     console.log(this.queryStr);
-    const queryCopy = { ...this.queryStr };
+
+    const queryCopy = {
+      category: this.queryStr.get('category')
+        ? this.queryStr.get('category')
+        : '',
+      'price[gte]': this.queryStr.get('price[gte]')
+        ? this.queryStr.get('price[gte]')
+        : '',
+      'price[lte]': this.queryStr.get('price[lte]')
+        ? this.queryStr.get('price[lte]')
+        : '',
+    };
 
     console.log('QUERYCOPY BEFORE REMOVING KEYWORD AND PAGE');
     console.log(queryCopy);
 
-    const removeFields = ['keyword', 'page'];
-    removeFields.forEach((el) => delete queryCopy[el]);
+    // const removeFields = ['keyword', 'page'];
+    // removeFields.forEach((el) => delete queryCopy[el]);
 
-    console.log('QUERYCOPY AFTER REMOVING KEYWORD AND PAGE');
-    console.log(queryCopy);
+    // console.log('QUERYCOPY AFTER REMOVING KEYWORD AND PAGE');
+    // console.log(queryCopy);
 
     let output = {};
     let prop = '';
