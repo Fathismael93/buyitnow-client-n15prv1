@@ -7,7 +7,6 @@ class APIFilters {
   }
 
   search() {
-    console.log(this.query);
     const keyword = this.queryStr.get('keyword')
       ? {
           name: {
@@ -17,12 +16,7 @@ class APIFilters {
         }
       : {};
 
-    console.log('are we coming to the end of the search method');
-    console.log({ ...keyword });
-
     this.query = this.query.find({ ...keyword });
-    console.log('After the search, returning this.query');
-    console.log(this.query);
     return this;
   }
 
@@ -30,13 +24,21 @@ class APIFilters {
     console.log('WE ARE IN THE BEGINNING OF THE FILTER METHOD');
     const queryCopy = { ...this.queryStr };
 
+    console.log('QUERYCOPY BEFORE REMOVING KEYWORD AND PAGE');
+    console.log(queryCopy);
+
     const removeFields = ['keyword', 'page'];
     removeFields.forEach((el) => delete queryCopy[el]);
+
+    console.log('QUERYCOPY AFTER REMOVING KEYWORD AND PAGE');
+    console.log(queryCopy);
 
     let output = {};
     let prop = '';
 
     for (let key in queryCopy) {
+      console.log('KEY IN QUERYCOPY');
+      console.log(key);
       if (!key.match(/\b(gt|gte|lt|lte)/)) {
         if (key === 'category') {
           const categoryId = mongoose.Types.ObjectId.createFromHexString(
