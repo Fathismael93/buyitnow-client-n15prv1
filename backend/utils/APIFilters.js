@@ -56,7 +56,7 @@ class APIFilters {
       if (!key.match(/\b(gt|gte|lt|lte)/)) {
         if (key === 'category') {
           console.log('queryCopy[key]: ');
-          console.log(queryCopy.key);
+          console.log(queryCopy[key]);
 
           const categoryId = mongoose.Types.ObjectId.createFromHexString(
             queryCopy[key],
