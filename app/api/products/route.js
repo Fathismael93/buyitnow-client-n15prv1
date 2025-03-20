@@ -4,6 +4,7 @@ import Product from '@/backend/models/product';
 import APIFilters from '@/backend/utils/APIFilters';
 import { NextResponse } from 'next/server';
 
+// eslint-disable-next-line no-unused-vars
 export async function GET(req) {
   try {
     console.log('We are in the get products get request');
