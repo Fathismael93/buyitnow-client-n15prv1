@@ -21,10 +21,13 @@ class APIFilters {
     console.log('are we coming to the end of the search method');
 
     this.query = this.query.find({ ...keyword });
+    console.log('After the search, returning this.query')
+    console.log(this.query)
     return this;
   }
 
   filter() {
+    console.log("WE ARE IN THE BEGINNING OF THE FILTER METHOD")
     const queryCopy = { ...this.queryStr };
 
     const removeFields = ['keyword', 'page'];
@@ -58,7 +61,12 @@ class APIFilters {
     }
     // { price: { $gte: 100, $lte: 1000 } }
 
+    console.log("HERE IS THE OUTPUT FOR FILTERING")
+    console.log(output)
+
     this.query = this.query.find(output);
+    console.log('After the filtering, returning this.query')
+    console.log(this.query)
     return this;
   }
 
