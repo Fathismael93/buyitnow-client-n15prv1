@@ -4,7 +4,8 @@ import Product from '@/backend/models/product';
 // import APIFilters from '@/backend/utils/APIFilters';
 import { NextResponse } from 'next/server';
 
-export async function GET(req) {
+// eslint-disable-next-line no-unused-vars
+export async function GET(_req) {
   try {
     console.log('CONNECTING TO DATABASE');
     dbConnect();
