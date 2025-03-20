@@ -29,7 +29,7 @@ class APIFilters {
     const queryCopy = {
       category: this.queryStr.get('category')
         ? this.queryStr.get('category')
-        : '',
+        : 'test',
       'price[gte]': this.queryStr.get('price[gte]')
         ? this.queryStr.get('price[gte]')
         : '',
