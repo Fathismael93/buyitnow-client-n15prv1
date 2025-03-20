@@ -11,10 +11,10 @@ export async function GET(req) {
     // const resPerPage = 2;
 
     console.log('NextRequest: ');
-    console.log(NextRequest);
+    console.log(NextRequest.toString());
 
     console.log('GET API FILTER AND INVOKE SEARCH AND FILTER');
-    const apiFilters = new APIFilters(Product.find(), req.query)
+    const apiFilters = new APIFilters(await Product.find(), req.query)
       .search()
       .filter();
 
