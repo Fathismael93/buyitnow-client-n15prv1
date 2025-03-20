@@ -14,15 +14,20 @@ export async function GET(req) {
     console.log(req.nextUrl.searchParams);
 
     console.log('GET API FILTER AND INVOKE SEARCH AND FILTER');
-    const apiFilters = new APIFilters(Product.find(), req.nextUrl.searchParams)
-      .search()
-      .filter();
+    const apiFilters = new APIFilters(
+      Product.find(),
+      req.nextUrl.searchParams,
+    ).search();
 
     console.log('apiFilters: ');
     console.log(apiFilters);
 
     console.log('GET PRODUCTS FROM API FILTER AFTER SEARCH AND FILTER');
     let products = await apiFilters.query.populate('category');
+
+    console.log('Products searched and filtered');
+    console.log(products);
+
     const filteredProductsCount = products.length;
 
     console.log('INVOKE PAGINATION FROM API FILTER');
