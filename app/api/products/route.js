@@ -13,7 +13,7 @@ export async function GET(req) {
     const resPerPage = 2;
 
     console.log('GET API FILTER AND INVOKE SEARCH AND FILTER');
-    new APIFilters(Product.find(), req.query)
+    new APIFilters(await Product.find(), req.query)
       .then((result) => {
         console.log('RESULT FROM API FILTER');
         console.log(result);
