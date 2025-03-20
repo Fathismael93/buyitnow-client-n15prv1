@@ -10,8 +10,6 @@ export async function GET(req) {
 
     console.log('GET API FILTER AND INVOKE SEARCH AND FILTER');
     new APIFilters(Product.find(), req.query)
-      .search()
-      .filter()
       .then((result) => {
         console.log('RESULT FROM API FILTER');
         console.log(result);
