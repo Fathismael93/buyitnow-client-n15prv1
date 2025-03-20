@@ -11,7 +11,7 @@ class APIFilters {
     console.log(this.query);
 
     console.log('CHECKING IF KEYWORD IS THERE');
-    console.log(this.queryStr.keyword);
+    console.log(this.queryStr.get('keyword'));
 
     const keyword = this.queryStr.keyword
       ? {
