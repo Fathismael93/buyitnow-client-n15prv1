@@ -23,6 +23,10 @@ export async function GET(req, res) {
 
     const categories = await Category.find();
 
+    console.log(categories);
+    console.log(totalPages);
+    console.log(products);
+
     return res.status(200).json({
       categories,
       totalPages,
