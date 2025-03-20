@@ -18,6 +18,8 @@ class APIFilters {
         }
       : {};
 
+    console.log('are we coming to the end of the search method');
+
     this.query = this.query.find({ ...keyword });
     return this;
   }
