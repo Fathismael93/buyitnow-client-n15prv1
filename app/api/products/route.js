@@ -6,22 +6,17 @@ import { NextResponse } from 'next/server';
 
 export async function GET(req) {
   try {
-    console.log('CONNECTING TO DATABASE');
-    dbConnect();
-
     console.log('We are in the get products get request');
-    const resPerPage = 2;
+    dbConnect();
+    // const resPerPage = 2;
 
     console.log('GET API FILTER AND INVOKE SEARCH AND FILTER');
-    new APIFilters(await Product.find(), req.query)
-      .then((result) => {
-        console.log('RESULT FROM API FILTER');
-        console.log(result);
-      })
-      .catch((err) => {
-        console.log('ERROR FROM API FILTER');
-        console.log(err);
-      });
+    const apiFilters = new APIFilters(Product.find(), req.query)
+      .search()
+      .filter();
+
+    console.log('apiFilters: ');
+    console.log(apiFilters);
 
     // console.log('GET PRODUCTS FROM API FILTER AFTER SEARCH AND FILTER');
     // let products = await apiFilters.query.populate('category');
@@ -45,7 +40,7 @@ export async function GET(req) {
         success: true,
         data: {
           categories: [],
-          totalPages: resPerPage,
+          totalPages: [],
           products: [],
         },
       },
