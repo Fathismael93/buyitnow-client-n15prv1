@@ -1,6 +1,6 @@
-import Product from '../models/product';
+import Product from '@/backend/models/product';
 import next from 'next';
-import ErrorHandler from '../utils/errorHandler';
+import ErrorHandler from '@/backend/utils/errorHandler';
 
 export async function GET(req, { params }, res) {
   try {

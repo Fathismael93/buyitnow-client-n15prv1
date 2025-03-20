@@ -1,6 +1,6 @@
-import Product from '../models/product';
-import Category from '../models/category';
-import APIFilters from '../utils/APIFilters';
+import Product from '@/backend/models/product';
+import Category from '@/backend/models/category';
+import APIFilters from '@/backend/utils/APIFilters';
 
 export async function GET(req, res) {
   try {
