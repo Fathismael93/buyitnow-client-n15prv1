@@ -2,20 +2,18 @@ import dbConnect from '@/backend/config/dbConnect';
 import Product from '@/backend/models/product';
 // import Category from '@/backend/models/category';
 import APIFilters from '@/backend/utils/APIFilters';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-// eslint-disable-next-line no-unused-vars
 export async function GET(req) {
   try {
     console.log('We are in the get products get request');
     dbConnect();
     // const resPerPage = 2;
 
-    console.log('NextRequest: ');
-    console.log(NextRequest.toString());
-
     console.log('GET API FILTER AND INVOKE SEARCH AND FILTER');
-    const apiFilters = new APIFilters(await Product.find()).search().filter();
+    const apiFilters = new APIFilters(await Product.find(), req.query)
+      .search()
+      .filter();
 
     console.log('apiFilters: ');
     console.log(apiFilters);
