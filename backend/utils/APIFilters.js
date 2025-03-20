@@ -18,9 +18,9 @@ class APIFilters {
       : {};
 
     console.log('are we coming to the end of the search method');
-    console.log(keyword);
+    console.log({ ...keyword });
 
-    this.query = this.query.find({ ...keyword });
+    this.query.find({ ...keyword });
     console.log('After the search, returning this.query');
     console.log(this.query);
     return this;
