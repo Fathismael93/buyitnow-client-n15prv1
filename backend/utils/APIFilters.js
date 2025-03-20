@@ -44,9 +44,6 @@ class APIFilters {
       };
     }
 
-    console.log('QUERYCOPY BEFORE REMOVING KEYWORD AND PAGE');
-    console.log(queryCopy);
-
     const removeFields = ['keyword', 'page'];
     removeFields.forEach((el) => delete queryCopy[el]);
 
@@ -54,24 +51,13 @@ class APIFilters {
     let prop = '';
 
     for (let key in queryCopy) {
-      console.log('KEY IN QUERYCOPY');
-      console.log(key);
       if (!key.match(/\b(gt|gte|lt|lte)/)) {
         if (key === 'category') {
-          console.log('queryCopy[key]: ');
-          console.log(queryCopy[key]);
-
-          console.log('output object before objectId');
-          console.log(output);
-
           const categoryId = mongoose.Types.ObjectId.createFromHexString(
             queryCopy[key],
           );
 
           output[key] = categoryId;
-
-          console.log('output object after objectId');
-          console.log(output);
         } else {
           output[key] = queryCopy[key];
         }
@@ -89,12 +75,7 @@ class APIFilters {
     }
     // { price: { $gte: 100, $lte: 1000 } }
 
-    console.log('HERE IS THE OUTPUT FOR FILTERING');
-    console.log(output);
-
     this.query = this.query.find(output);
-    console.log('After the filtering, returning this.query');
-    console.log(this.query);
     return this;
   }
 
