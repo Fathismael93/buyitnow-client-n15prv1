@@ -58,11 +58,17 @@ class APIFilters {
           console.log('queryCopy[key]: ');
           console.log(queryCopy[key]);
 
+          console.log('output object before objectId');
+          console.log(output);
+
           const categoryId = mongoose.Types.ObjectId.createFromHexString(
             queryCopy[key],
           );
 
           output[key] = categoryId;
+
+          console.log('output object after objectId');
+          console.log(output);
         } else {
           output[key] = queryCopy[key];
         }
