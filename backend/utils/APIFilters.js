@@ -22,6 +22,8 @@ class APIFilters {
 
   filter() {
     console.log('WE ARE IN THE BEGINNING OF THE FILTER METHOD');
+    console.log('QUERY STRING IN FILTER METHOD');
+    console.log(this.queryStr);
     const queryCopy = { ...this.queryStr };
 
     console.log('QUERYCOPY BEFORE REMOVING KEYWORD AND PAGE');
