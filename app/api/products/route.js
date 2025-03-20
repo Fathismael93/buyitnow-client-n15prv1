@@ -10,8 +10,8 @@ export async function GET(req) {
     dbConnect();
     // const resPerPage = 2;
 
-    console.log('req.query: ');
-    console.log(req.query);
+    console.log('req: ');
+    console.log(req);
 
     console.log('GET API FILTER AND INVOKE SEARCH AND FILTER');
     const apiFilters = new APIFilters(Product.find(), req.query)
