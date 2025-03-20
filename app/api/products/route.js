@@ -2,13 +2,16 @@ import dbConnect from '@/backend/config/dbConnect';
 import Product from '@/backend/models/product';
 // import Category from '@/backend/models/category';
 import APIFilters from '@/backend/utils/APIFilters';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req) {
   try {
     console.log('We are in the get products get request');
     dbConnect();
     // const resPerPage = 2;
+
+    console.log('NextRequest: ');
+    console.log(NextRequest);
 
     console.log('GET API FILTER AND INVOKE SEARCH AND FILTER');
     const apiFilters = new APIFilters(Product.find(), req.query)
