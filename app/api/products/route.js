@@ -1,7 +1,7 @@
 import dbConnect from '@/backend/config/dbConnect';
 import Product from '@/backend/models/product';
 // import Category from '@/backend/models/category';
-import APIFilters from '@/backend/utils/APIFilters';
+// import APIFilters from '@/backend/utils/APIFilters';
 import { NextResponse } from 'next/server';
 
 export async function GET(req) {
@@ -12,16 +12,26 @@ export async function GET(req) {
     console.log('We are in the get products get request');
     const resPerPage = 2;
 
-    console.log('GET API FILTER AND INVOKE SEARCH AND FILTER');
-    new APIFilters(Product.find(), req.query)
+    await Product.find()
       .then((result) => {
-        console.log('RESULT FROM API FILTER');
+        console.log('RESULT FROM DATABASE');
         console.log(result);
       })
       .catch((err) => {
-        console.log('ERROR FROM API FILTER');
+        console.log('ERROR FROM DATABASE');
         console.log(err);
       });
+
+    // console.log('GET API FILTER AND INVOKE SEARCH AND FILTER');
+    // new APIFilters(Product.find(), req.query)
+    //   .then((result) => {
+    //     console.log('RESULT FROM API FILTER');
+    //     console.log(result);
+    //   })
+    //   .catch((err) => {
+    //     console.log('ERROR FROM API FILTER');
+    //     console.log(err);
+    //   });
 
     // console.log('GET PRODUCTS FROM API FILTER AFTER SEARCH AND FILTER');
     // let products = await apiFilters.query.populate('category');
