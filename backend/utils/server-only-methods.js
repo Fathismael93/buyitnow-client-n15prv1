@@ -18,11 +18,19 @@ export const getAllProducts = async (searchParams) => {
 
   const searchQuery = queryString.stringify(urlParams);
 
-  const res = await fetch(`${process.env.API_URL}/api/products?${searchQuery}`);
+  await fetch(`${process.env.API_URL}/api/products?${searchQuery}`)
+    .then((result) => {
+      console.log('result in getAllProducts: ');
+      console.log(result);
+    })
+    .catch((error) => {
+      console.log('Error in getAllProducts: ');
+      console.log(error);
+    });
 
-  const data = await res.json();
+  // const data = await res.json();
 
-  return data;
+  return [];
 };
 
 export const getProductDetails = async (id) => {
@@ -63,6 +71,7 @@ export const getAllAddresses = async (page) => {
     }
 
     return data;
+    // eslint-disable-next-line no-unused-vars, no-empty
   } catch (error) {}
 };
 
