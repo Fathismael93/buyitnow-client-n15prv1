@@ -8,7 +8,7 @@ class APIFilters {
 
   search() {
     console.log('CHECKING IF KEYWORD IS THERE');
-    console.log(this.queryStr);
+    console.log(this.queryStr.keyword);
 
     const keyword = this.queryStr.keyword
       ? {
