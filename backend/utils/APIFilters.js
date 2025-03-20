@@ -21,31 +21,34 @@ class APIFilters {
   }
 
   filter() {
-    console.log('WE ARE IN THE BEGINNING OF THE FILTER METHOD');
+    let queryCopy = {};
 
-    console.log('QUERY STRING IN FILTER METHOD');
-    console.log(this.queryStr);
+    if (this.queryStr.get('category')) {
+      queryCopy = {
+        category: this.queryStr.get('category'),
+        ...queryCopy,
+      };
+    }
 
-    const queryCopy = {
-      category: this.queryStr.get('category')
-        ? this.queryStr.get('category')
-        : '676d399c8b3e091eb4877c5c',
-      'price[gte]': this.queryStr.get('price[gte]')
-        ? this.queryStr.get('price[gte]')
-        : '',
-      'price[lte]': this.queryStr.get('price[lte]')
-        ? this.queryStr.get('price[lte]')
-        : '',
-    };
+    if (this.queryStr.get('price[gte]')) {
+      queryCopy = {
+        'price[gte]': this.queryStr.get('price[gte]'),
+        ...queryCopy,
+      };
+    }
+
+    if (this.queryStr.get('price[lte]')) {
+      queryCopy = {
+        'price[lte]': this.queryStr.get('price[lte]'),
+        ...queryCopy,
+      };
+    }
 
     console.log('QUERYCOPY BEFORE REMOVING KEYWORD AND PAGE');
     console.log(queryCopy);
 
-    // const removeFields = ['keyword', 'page'];
-    // removeFields.forEach((el) => delete queryCopy[el]);
-
-    // console.log('QUERYCOPY AFTER REMOVING KEYWORD AND PAGE');
-    // console.log(queryCopy);
+    const removeFields = ['keyword', 'page'];
+    removeFields.forEach((el) => delete queryCopy[el]);
 
     let output = {};
     let prop = '';
