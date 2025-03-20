@@ -7,8 +7,9 @@ class APIFilters {
   }
 
   search() {
-    console.log('CHECKING IF PRODUCTS ARE GOTTEN FROM DATABASE');
-    console.log(this.query);
+    console.log('CHECKING IF KEYWORD IS THERE');
+    console.log(this.queryStr);
+
     const keyword = this.queryStr.keyword
       ? {
           name: {
