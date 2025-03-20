@@ -2,9 +2,8 @@ import dbConnect from '@/backend/config/dbConnect';
 import Product from '@/backend/models/product';
 import Category from '@/backend/models/category';
 import APIFilters from '@/backend/utils/APIFilters';
-import { NextResponse } from 'next/server';
 
-export async function GET(req) {
+export async function GET(req, res) {
   try {
     dbConnect();
     const resPerPage = 2;
@@ -24,24 +23,12 @@ export async function GET(req) {
 
     const categories = await Category.find();
 
-    return NextResponse.json(
-      {
-        success: true,
-        data: {
-          categories,
-          totalPages,
-          products,
-        },
-      },
-      { status: 200 },
-    );
+    return res.status(200).json({
+      categories,
+      totalPages,
+      products,
+    });
   } catch (error) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: error,
-      },
-      { status: 500 },
-    );
+    return res.status(500).json(error);
   }
 }
