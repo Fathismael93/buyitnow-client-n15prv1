@@ -7,6 +7,7 @@ class APIFilters {
   }
 
   search() {
+    console.log(this.query);
     const keyword = this.queryStr.get('keyword')
       ? {
           name: {
@@ -17,9 +18,9 @@ class APIFilters {
       : {};
 
     console.log('are we coming to the end of the search method');
-    console.log(keyword.name.$regex);
+    console.log(keyword);
 
-    this.query = this.query.find(keyword);
+    this.query = this.query.find({ ...keyword });
     console.log('After the search, returning this.query');
     console.log(this.query);
     return this;
