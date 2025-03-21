@@ -87,7 +87,7 @@ export async function POST(req) {
     const product = await Product.findById(body.productId);
 
     if (!product) {
-      return NextResponse.next(new ErrorHandler('Product not found', 404));
+      return new ErrorHandler('Product not found', 404);
     }
 
     console.log('PRODUCT IN DB');
@@ -97,7 +97,7 @@ export async function POST(req) {
     // IF QUANTITY ASKED BY THE USER IS MORE THEN THE PRODUCT'STOCK...
 
     if (quantity > product.stock) {
-      return NextResponse.next(new ErrorHandler('Product inavailable', 404));
+      return new ErrorHandler('Product inavailable', 404);
     }
 
     console.log('STARTING TO ADD THE ITEM');
