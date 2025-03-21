@@ -1,6 +1,6 @@
 import ErrorHandler from '../utils/errorHandler';
 import { getServerSession } from 'next-auth';
-import { auth } from '@/app/api/auth/[...nextauth]';
+import { auth } from '@/app/api/auth/[...nextauth]/route';
 
 const isAuthenticatedUser = async (req, res) => {
   console.log('WE ARE STARTING TO CHECK SESSION');
