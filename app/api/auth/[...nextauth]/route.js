@@ -36,7 +36,7 @@ const auth = {
       /****** In Development Mode, url is "/api/auth/session?update" ******/
       /****** In Production Mode, url is "/api/auth/session?update=" ******/
 
-      if (NextRequest.nextUrl.pathname === '/api/auth/session?update=') {
+      if (NextRequest?.nextUrl?.pathname === '/api/auth/session?update=') {
         const updatedUser = await User.findById(token.user._id);
 
         token.user = updatedUser;
