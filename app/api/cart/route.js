@@ -63,7 +63,12 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
+    console.log('WE ARE IN POST ITEM IN CART REQUEST');
     await isAuthenticatedUser(req, NextResponse);
+
+    console.log(
+      'WE HAVE CHECKED IF SESSION EXISTS AND WE ARE CONNECTING TO DB',
+    );
 
     dbConnect();
 
@@ -73,7 +78,11 @@ export async function POST(req) {
       return NextResponse.next(new ErrorHandler('User not found', 404));
     }
 
+    console.log('USER EXISTS IN OUR DB');
+
     const body = JSON.parse(req.body);
+
+    console.log('GOT THE BODY FROM REQUEST');
 
     const product = await Product.findById(body.productId);
 
@@ -116,3 +125,19 @@ export async function POST(req) {
     );
   }
 }
+
+// export async function PUT(req) {
+//   try {
+//     await isAuthenticatedUser(req, NextResponse);
+
+//     dbConnect();
+//   } catch (error) {
+//     return NextResponse.json(
+//       {
+//         success: false,
+//         message: error,
+//       },
+//       { status: 500 },
+//     );
+//   }
+// }
