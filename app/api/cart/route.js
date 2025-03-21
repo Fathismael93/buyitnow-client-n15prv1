@@ -90,6 +90,8 @@ export async function POST(req) {
       return NextResponse.next(new ErrorHandler('Product not found', 404));
     }
 
+    console.log('PRODUCT IN DB');
+
     let quantity = 1;
 
     // IF QUANTITY ASKED BY THE USER IS MORE THEN THE PRODUCT'STOCK...
@@ -98,6 +100,8 @@ export async function POST(req) {
       return NextResponse.next(new ErrorHandler('Product inavailable', 404));
     }
 
+    console.log('STARTING TO ADD THE ITEM');
+
     const cart = {
       product: product._id,
       user: user._id,
@@ -105,6 +109,8 @@ export async function POST(req) {
     };
 
     const cartAdded = await Cart.create(cart);
+
+    console.log('ITEM ADDED AND RETURNING RESPONSE');
 
     return NextResponse.json(
       {
