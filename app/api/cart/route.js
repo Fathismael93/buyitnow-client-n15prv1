@@ -87,7 +87,12 @@ export async function POST(req) {
     const product = await Product.findById(body.productId);
 
     if (!product) {
-      return new ErrorHandler('Product not found', 404);
+      return NextResponse.json(
+        {
+          error: 'Product not found',
+        },
+        { status: 404 },
+      );
     }
 
     console.log('PRODUCT IN DB');
@@ -97,7 +102,12 @@ export async function POST(req) {
     // IF QUANTITY ASKED BY THE USER IS MORE THEN THE PRODUCT'STOCK...
 
     if (quantity > product.stock) {
-      return new ErrorHandler('Product inavailable', 404);
+      return NextResponse.json(
+        {
+          error: 'Product inavailable',
+        },
+        { status: 404 },
+      );
     }
 
     console.log('STARTING TO ADD THE ITEM');
@@ -125,7 +135,7 @@ export async function POST(req) {
     return NextResponse.json(
       {
         success: false,
-        message: error,
+        error: error,
       },
       { status: 500 },
     );
