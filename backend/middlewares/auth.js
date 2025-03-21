@@ -4,7 +4,7 @@ import { auth } from '@/app/api/auth/[...nextauth]/route';
 
 const isAuthenticatedUser = async (req, res) => {
   console.log('WE ARE STARTING TO CHECK SESSION');
-  const session = await getServerSession(req, res, auth);
+  const session = await getServerSession(auth);
 
   console.log('WE HAVE GOT SESSION FROM NEXTAUTH');
 
