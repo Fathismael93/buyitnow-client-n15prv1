@@ -51,6 +51,9 @@ export async function GET(req) {
 
     console.log('WE ARE RETURNING CART');
 
+    console.log(cartCount);
+    console.log(cart);
+
     return NextResponse.json(
       {
         success: true,

@@ -9,7 +9,9 @@ const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [cart, setCart] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [cartCount, setCartCount] = useState(0);
   const [checkoutInfo, setCheckoutInfo] = useState(null);
   const [orderInfo, setOrderInfo] = useState(null);
@@ -17,12 +19,21 @@ export const CartProvider = ({ children }) => {
   const setCartToState = async () => {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`);
-      const { data, status } = await res.json();
+      await res
+        .json()
+        .then((result) => {
+          console.log('Result');
+          console.log(result);
+        })
+        .catch((error) => {
+          console.log('error');
+          console.log(error);
+        });
 
-      if (status === 200) {
-        setCart(data?.cart);
-        setCartCount(data?.cartCount);
-      }
+      // if (status === 200) {
+      //   setCart(data?.cart);
+      //   setCartCount(data?.cartCount);
+      // }
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }
