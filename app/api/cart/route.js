@@ -80,6 +80,8 @@ export async function POST(req) {
 
     console.log('USER EXISTS IN OUR DB');
 
+    console.log(req.body);
+
     const body = req.body;
 
     console.log('GOT THE BODY FROM REQUEST');
