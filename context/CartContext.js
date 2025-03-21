@@ -17,9 +17,9 @@ export const CartProvider = ({ children }) => {
   const setCartToState = async () => {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`);
-      const data = await res.json();
+      const { data, status } = await res.json();
 
-      if (data) {
+      if (status === 200) {
         setCart(data?.cart);
         setCartCount(data?.cartCount);
       }

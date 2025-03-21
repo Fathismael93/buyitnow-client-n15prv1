@@ -2,7 +2,7 @@ import ErrorHandler from '../utils/errorHandler';
 import { getServerSession } from 'next-auth';
 import auth from '@/pages/api/auth/[...nextauth]';
 
-const isAuthenticatedUser = async (req, res, next) => {
+const isAuthenticatedUser = async (req, res) => {
   const session = await getServerSession(req, res, auth);
 
   if (!session) {
@@ -11,7 +11,7 @@ const isAuthenticatedUser = async (req, res, next) => {
 
   req.user = session.user;
 
-  next();
+  res.next();
 };
 
 export { isAuthenticatedUser };
