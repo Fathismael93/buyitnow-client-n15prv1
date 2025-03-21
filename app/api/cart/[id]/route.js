@@ -1,7 +1,7 @@
-import User from '../models/user';
-import Cart from '../models/cart';
+import User from '@/backend/models/user';
+import Cart from '@/backend/models/cart';
 import next from 'next';
-import ErrorHandler from '../utils/errorHandler';
+import ErrorHandler from '@/backend/utils/errorHandler';
 import isAuthenticatedUser from '@/backend/middlewares/auth';
 import dbConnect from '@/backend/config/dbConnect';
 import { NextResponse } from 'next/server';
