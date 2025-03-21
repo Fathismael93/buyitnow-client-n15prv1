@@ -5,7 +5,7 @@ import dbConnect from '@/backend/config/dbConnect';
 import User from '@/backend/models/user';
 import { NextRequest } from 'next/server';
 
-export const auth = {
+const auth = {
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
@@ -63,4 +63,4 @@ export const auth = {
 };
 
 const handler = NextAuth(auth);
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST, auth };
