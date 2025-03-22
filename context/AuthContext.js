@@ -124,7 +124,7 @@ export const AuthProvider = ({ children }) => {
         },
       );
 
-      const data = await res.json();
+      const { data } = await res.json();
 
       if (data) {
         router.push('/me');
@@ -148,7 +148,7 @@ export const AuthProvider = ({ children }) => {
         },
       );
 
-      const data = await res.json();
+      const { data } = await res.json();
 
       if (data?.address) {
         setUpdated(true);
@@ -172,7 +172,7 @@ export const AuthProvider = ({ children }) => {
         },
       );
 
-      const data = await res.json();
+      const { data } = await res.json();
 
       if (data?.success) {
         router.push('/me');

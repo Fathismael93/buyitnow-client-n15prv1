@@ -7,7 +7,6 @@ import DeliveryPrice from '../models/deliveryPrice';
 
 export const newAddress = async (req, res) => {
   try {
-    console.log('We are in addAddress controller');
     const user = await User.findOne({ email: req.user.email }).select('_id');
 
     if (!user) {

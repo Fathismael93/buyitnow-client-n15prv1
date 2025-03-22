@@ -56,7 +56,7 @@ export const getAllAddresses = async (page) => {
       },
     });
 
-    const data = await res.json();
+    const { data } = await res.json();
 
     if (page === 'profile') {
       delete data?.paymentTypes;
@@ -83,9 +83,9 @@ export const getSingleAddress = async (id) => {
     },
   });
 
-  const data = await res.json();
+  const { data } = await res.json();
 
-  if (data === undefined) {
+  if (data?.address === undefined) {
     return notFound();
   }
 
