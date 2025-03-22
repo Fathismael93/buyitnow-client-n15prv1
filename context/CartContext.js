@@ -42,10 +42,6 @@ export const CartProvider = ({ children }) => {
       if (data?.cartAdded) {
         setCartToState();
         toast.success('Product added to cart');
-      } else {
-        toast.error(
-          "Il semblerait qu'une erreur soit survenue! Réessayer plus tard",
-        );
       }
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -71,11 +67,6 @@ export const CartProvider = ({ children }) => {
           setCartToState();
           toast.success(data);
           setLoading(false);
-        } else {
-          toast.error(
-            "Il semblerait qu'une erreur soit survenue! Réessayer plus tard",
-          );
-          setLoading(false);
         }
       } catch (error) {
         toast.error(error?.response?.data?.message);
@@ -100,11 +91,6 @@ export const CartProvider = ({ children }) => {
       if (success) {
         setCartToState();
         toast.success('Produit supprimé');
-        setLoading(false);
-      } else {
-        toast.error(
-          "Il semblerait qu'une erreur soit survenue! Réessayer plus tard",
-        );
         setLoading(false);
       }
     } catch (error) {

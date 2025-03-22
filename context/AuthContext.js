@@ -34,10 +34,6 @@ export const AuthProvider = ({ children }) => {
 
       if (data?.user) {
         router.push('/login');
-      } else {
-        toast.error(
-          "Il semblerait qu'une erreur soit survenue! Réessayer plus tard",
-        );
       }
     } catch (error) {
       setError(error?.response?.data?.message);
@@ -77,10 +73,6 @@ export const AuthProvider = ({ children }) => {
       if (data?.updatedUser) {
         loadUser();
         setLoading(false);
-      } else {
-        toast.error(
-          "Il semblerait qu'une erreur soit survenue! Réessayer plus tard",
-        );
       }
     } catch (error) {
       setLoading(false);
@@ -128,10 +120,6 @@ export const AuthProvider = ({ children }) => {
 
       if (data) {
         router.push('/me');
-      } else {
-        toast.error(
-          "Il semblerait qu'une erreur soit survenue! Réessayer plus tard",
-        );
       }
     } catch (error) {
       setError(error?.response?.data?.message);
@@ -153,10 +141,6 @@ export const AuthProvider = ({ children }) => {
       if (data?.address) {
         setUpdated(true);
         router.replace(`/address/${id}`);
-      } else {
-        toast.error(
-          "Il semblerait qu'une erreur soit survenue! Réessayer plus tard",
-        );
       }
     } catch (error) {
       setError(error?.response?.data?.message);
@@ -194,10 +178,6 @@ export const AuthProvider = ({ children }) => {
 
       if (data) {
         router.push('/me');
-      } else {
-        toast.error(
-          "Il semblerait qu'une erreur soit survenue! Réessayer plus tard",
-        );
       }
     } catch (error) {
       setError(error?.response?.data?.message);
