@@ -80,7 +80,7 @@ export async function POST(req) {
 
     console.log('USER EXISTS IN OUR DB');
 
-    console.log(await req.json());
+    console.log(req);
 
     const body = await req.json();
 
@@ -88,7 +88,10 @@ export async function POST(req) {
 
     const product = await Product.findById(body.productId);
 
+    console.log('CHECKING IF PRODUCT IS IN DB');
+
     if (!product) {
+      console.log('PRODUCT NOT FOUND IN DB');
       return NextResponse.json(
         {
           error: 'Product not found',
