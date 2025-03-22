@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
         },
       );
 
-      const data = await res.json();
+      const { data } = await res.json();
 
       if (data?.user) {
         router.push('/login');
@@ -172,18 +172,11 @@ export const AuthProvider = ({ children }) => {
         },
       );
 
-      const data = await res.json();
+      const { success, message } = await res.json();
 
-      console.log('data: ');
-      console.log(data);
-
-      if (data?.success) {
-        toast.success(data?.message);
+      if (success) {
+        toast.success(message);
         router.push('/me');
-      } else {
-        toast.error(
-          "Il semblerait qu'une erreur soit survenue! Réessayer plus tard",
-        );
       }
     } catch (error) {
       setError(error?.response?.data?.message);
