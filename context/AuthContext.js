@@ -177,13 +177,14 @@ export const AuthProvider = ({ children }) => {
       console.log('data: ');
       console.log(data);
 
-      // if (data?.success) {
-      //   router.push('/me');
-      // } else {
-      //   toast.error(
-      //     "Il semblerait qu'une erreur soit survenue! Réessayer plus tard",
-      //   );
-      // }
+      if (data?.success) {
+        toast.success(data?.message);
+        router.push('/me');
+      } else {
+        toast.error(
+          "Il semblerait qu'une erreur soit survenue! Réessayer plus tard",
+        );
+      }
     } catch (error) {
       setError(error?.response?.data?.message);
     }

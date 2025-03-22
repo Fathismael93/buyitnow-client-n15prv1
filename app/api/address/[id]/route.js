@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import Address from '@/backend/models/address';
-import ErrorHandler from '@/backend/utils/errorHandler';
 import isAuthenticatedUser from '@/backend/middlewares/auth';
 import dbConnect from '@/backend/config/dbConnect';
 
@@ -15,7 +14,13 @@ export async function GET(req, { params }) {
     const address = await Address.findById(id);
 
     if (!address) {
-      return NextResponse.next(new ErrorHandler('Address not found', 404));
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Address not found',
+        },
+        { status: 200 },
+      );
     }
 
     return NextResponse.json(
@@ -51,7 +56,13 @@ export async function PUT(req, { params }) {
     const oldAddress = await Address.findById(id);
 
     if (!oldAddress) {
-      return NextResponse.next(new ErrorHandler('Address not found', 404));
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Address not found',
+        },
+        { status: 200 },
+      );
     }
 
     const address = await Address.findByIdAndUpdate(id, newAddress, {
@@ -101,6 +112,7 @@ export async function DELETE(req, { params }) {
     return NextResponse.json(
       {
         success: true,
+        message: 'Adress deleted !',
       },
       { status: 200 },
     );

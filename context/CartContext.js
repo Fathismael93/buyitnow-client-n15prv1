@@ -39,7 +39,7 @@ export const CartProvider = ({ children }) => {
 
       const { data } = await res.json();
 
-      if (data.cartAdded) {
+      if (data?.cartAdded) {
         setCartToState();
         toast.success('Product added to cart');
       } else {
