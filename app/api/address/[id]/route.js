@@ -89,7 +89,13 @@ export async function DELETE(req, { params }) {
     const addressDeleted = await Address.findByIdAndDelete(id);
 
     if (!addressDeleted) {
-      return NextResponse.next(new ErrorHandler('Address not found', 404));
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Address not found',
+        },
+        { status: 200 },
+      );
     }
 
     return NextResponse.json(

@@ -172,15 +172,18 @@ export const AuthProvider = ({ children }) => {
         },
       );
 
-      const { data } = await res.json();
+      const data = await res.json();
 
-      if (data?.success) {
-        router.push('/me');
-      } else {
-        toast.error(
-          "Il semblerait qu'une erreur soit survenue! Réessayer plus tard",
-        );
-      }
+      console.log('data: ');
+      console.log(data);
+
+      // if (data?.success) {
+      //   router.push('/me');
+      // } else {
+      //   toast.error(
+      //     "Il semblerait qu'une erreur soit survenue! Réessayer plus tard",
+      //   );
+      // }
     } catch (error) {
       setError(error?.response?.data?.message);
     }
