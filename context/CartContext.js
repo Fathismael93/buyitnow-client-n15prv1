@@ -95,11 +95,11 @@ export const CartProvider = ({ children }) => {
         },
       );
 
-      const data = await res.json();
+      const { success } = await res.json();
 
-      if (data) {
+      if (success) {
         setCartToState();
-        toast.success(data);
+        toast.success('Produit supprimé');
         setLoading(false);
       } else {
         toast.error(
