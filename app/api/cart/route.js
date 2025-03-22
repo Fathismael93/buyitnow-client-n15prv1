@@ -3,7 +3,6 @@ import isAuthenticatedUser from '@/backend/middlewares/auth';
 import dbConnect from '@/backend/config/dbConnect';
 import User from '@/backend/models/user';
 import Cart from '@/backend/models/cart';
-// eslint-disable-next-line no-unused-vars
 import Product from '@/backend/models/product';
 import ErrorHandler from '@/backend/utils/errorHandler';
 import { DECREASE, INCREASE } from '@/helpers/constants';
@@ -178,7 +177,7 @@ export async function PUT(req) {
       });
 
       if (updatedCart) {
-        return NextResponse.json("Item Updated successfully")
+        return NextResponse.json('Item Updated successfully');
       } else {
         return NextResponse.next(
           new ErrorHandler('Unknown error! Try again later', 500),
@@ -195,7 +194,7 @@ export async function PUT(req) {
       });
 
       if (updatedCart) {
-        return NextResponse.json("Item Updated successfully")
+        return NextResponse.json('Item Updated successfully');
       } else {
         return NextResponse.next(
           new ErrorHandler('Unknown error! Try again later', 500),
