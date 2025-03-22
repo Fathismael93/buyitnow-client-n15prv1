@@ -4,7 +4,7 @@ import {
   getAddresses,
   newAddress,
 } from '@/backend/controllers/addressControllers';
-import { isAuthenticatedUser } from '@/backend/middlewares/auth';
+import isAuthenticatedUser from '@/backend/middlewares/auth';
 
 import onError from '@/backend/middlewares/errors';
 
