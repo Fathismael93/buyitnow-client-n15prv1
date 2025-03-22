@@ -63,12 +63,7 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    console.log('WE ARE IN POST ITEM IN CART REQUEST');
     await isAuthenticatedUser(req, NextResponse);
-
-    console.log(
-      'WE HAVE CHECKED IF SESSION EXISTS AND WE ARE CONNECTING TO DB',
-    );
 
     dbConnect();
 
@@ -78,20 +73,13 @@ export async function POST(req) {
       return NextResponse.next(new ErrorHandler('User not found', 404));
     }
 
-    console.log('USER EXISTS IN OUR DB');
-
     console.log(req);
 
     const body = await req.json();
 
-    console.log('GOT THE BODY FROM REQUEST');
-
     const product = await Product.findById(body.productId);
 
-    console.log('CHECKING IF PRODUCT IS IN DB');
-
     if (!product) {
-      console.log('PRODUCT NOT FOUND IN DB');
       return NextResponse.json(
         {
           error: 'Product not found',
@@ -99,8 +87,6 @@ export async function POST(req) {
         { status: 404 },
       );
     }
-
-    console.log('PRODUCT IN DB');
 
     let quantity = 1;
 
@@ -115,8 +101,6 @@ export async function POST(req) {
       );
     }
 
-    console.log('STARTING TO ADD THE ITEM');
-
     const cart = {
       product: product._id,
       user: user._id,
@@ -124,8 +108,6 @@ export async function POST(req) {
     };
 
     const cartAdded = await Cart.create(cart);
-
-    console.log('ITEM ADDED AND RETURNING RESPONSE');
 
     return NextResponse.json(
       {

@@ -34,9 +34,9 @@ export const getProductDetails = async (id) => {
 
   const res = await fetch(`${process.env.API_URL}/api/products/${id}`);
 
-  const data = await res.json();
+  const { data } = await res.json();
 
-  if (data === undefined) {
+  if (data?.product === undefined) {
     return notFound();
   }
 
