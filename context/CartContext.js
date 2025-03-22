@@ -37,7 +37,7 @@ export const CartProvider = ({ children }) => {
         }),
       });
 
-      const data = await res.json();
+      const { data } = await res.json();
 
       if (data.cartAdded) {
         setCartToState();
