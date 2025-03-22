@@ -178,7 +178,7 @@ export async function PUT(req) {
       });
 
       if (updatedCart) {
-        return res.status(200).json('Item updated in cart');
+        return NextResponse.json("Item Updated successfully")
       } else {
         return NextResponse.next(
           new ErrorHandler('Unknown error! Try again later', 500),
@@ -195,7 +195,7 @@ export async function PUT(req) {
       });
 
       if (updatedCart) {
-        return res.status(200).json('Item updated in cart');
+        return NextResponse.json("Item Updated successfully")
       } else {
         return NextResponse.next(
           new ErrorHandler('Unknown error! Try again later', 500),
