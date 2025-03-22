@@ -8,8 +8,8 @@ export const getProducts = async (req, res) => {
   try {
     const resPerPage = 2;
 
-    console.log("req.query")
-    console.log(req.query)
+    console.log('req.query');
+    console.log(req.query);
 
     const apiFilters = new APIFilters(Product.find(), req.query)
       .search()

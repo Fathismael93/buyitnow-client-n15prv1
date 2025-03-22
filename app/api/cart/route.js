@@ -6,6 +6,7 @@ import Cart from '@/backend/models/cart';
 // eslint-disable-next-line no-unused-vars
 import Product from '@/backend/models/product';
 import ErrorHandler from '@/backend/utils/errorHandler';
+import { DECREASE, INCREASE } from '@/helpers/constants';
 
 export async function GET(req) {
   try {
@@ -82,7 +83,7 @@ export async function POST(req) {
 
     console.log(req);
 
-    const body = req.body;
+    const body = await req.json();
 
     console.log('GOT THE BODY FROM REQUEST');
 
@@ -144,18 +145,70 @@ export async function POST(req) {
   }
 }
 
-// export async function PUT(req) {
-//   try {
-//     await isAuthenticatedUser(req, NextResponse);
+export async function PUT(req) {
+  try {
+    await isAuthenticatedUser(req, NextResponse);
 
-//     dbConnect();
-//   } catch (error) {
-//     return NextResponse.json(
-//       {
-//         success: false,
-//         message: error,
-//       },
-//       { status: 500 },
-//     );
-//   }
-// }
+    dbConnect();
+    const user = await User.findOne({ email: req.user.email });
+
+    if (!user) {
+      return NextResponse.next(new ErrorHandler('User not found', 404));
+    }
+
+    const body = await req.json();
+
+    const productId = body.product.product._id;
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return NextResponse.next(new ErrorHandler('Product not found', 404));
+    }
+
+    // IF THE USER WANT TO INCREASE THE QUANTITY OF A PRODUCT IN THE CART THEN THE VALUE WILL BE INCREASE
+
+    if (body.value === INCREASE) {
+      const neededQuantity = body.product.quantity + 1;
+      if (neededQuantity > product.stock) {
+        return NextResponse.next(new ErrorHandler('Inavailable Quantity', 404));
+      }
+
+      const updatedCart = await Cart.findByIdAndUpdate(body.product._id, {
+        quantity: neededQuantity,
+      });
+
+      if (updatedCart) {
+        return res.status(200).json('Item updated in cart');
+      } else {
+        return NextResponse.next(
+          new ErrorHandler('Unknown error! Try again later', 500),
+        );
+      }
+    }
+
+    // IF THE USER WANT TO DECREASE THE QUANTITY OF A PRODUCT IN THE CART THEN THE VALUE WILL BE DECREASE
+
+    if (body.value === DECREASE) {
+      const neededQuantity = body.product.quantity - 1;
+      const updatedCart = await Cart.findByIdAndUpdate(body.product._id, {
+        quantity: neededQuantity,
+      });
+
+      if (updatedCart) {
+        return res.status(200).json('Item updated in cart');
+      } else {
+        return NextResponse.next(
+          new ErrorHandler('Unknown error! Try again later', 500),
+        );
+      }
+    }
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: error,
+      },
+      { status: 500 },
+    );
+  }
+}
