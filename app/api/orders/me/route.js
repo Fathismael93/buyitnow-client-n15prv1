@@ -39,7 +39,7 @@ export async function GET(req) {
 
     const apiFilters = new APIFilters(
       Order.find(),
-      req?.nextUrl?.pathname,
+      req?.nextUrl?.searchParams,
     ).pagination(resPerPage);
 
     console.log('PAGINATION IS SET');
