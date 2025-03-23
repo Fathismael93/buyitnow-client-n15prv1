@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation';
 import mongoose from 'mongoose';
 import queryString from 'query-string';
 import { getCookieName } from '@/helpers/helpers';
+// eslint-disable-next-line no-unused-vars
+import { toast } from 'react-toastify';
 
 export const getAllProducts = async (searchParams) => {
   const urlParams = {
@@ -38,7 +40,10 @@ export const getProductDetails = async (id) => {
 
   console.log(data);
 
-  // const { data } = await res.json();
+  // if (data?.success === false) {
+  //   toast.info(data?.message);
+  //   return [];
+  // }
 
   // if (data?.product === undefined) {
   //   return notFound();

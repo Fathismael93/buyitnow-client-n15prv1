@@ -10,7 +10,7 @@ export async function GET(req, { params }) {
 
     const { id } = params;
 
-    const product = await Product.findById(id).populate('category');
+    const product = Product.findById(id).populate('category');
 
     if (!product) {
       return NextResponse.json(
