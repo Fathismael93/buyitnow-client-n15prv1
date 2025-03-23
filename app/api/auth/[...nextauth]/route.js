@@ -30,6 +30,15 @@ const auth = {
     }),
   ],
   callbacks: {
+    async redirect({ url, baseUrl }) {
+      console.log('url');
+      console.log(url);
+
+      console.log('baseUrl');
+      console.log(baseUrl);
+
+      return baseUrl;
+    },
     jwt: async ({ token, user }) => {
       user && (token.user = user);
 
