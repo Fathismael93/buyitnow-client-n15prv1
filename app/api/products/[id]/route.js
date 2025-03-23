@@ -9,6 +9,7 @@ export async function GET(req, { params }) {
   try {
     dbConnect();
 
+    // eslint-disable-next-line no-unused-vars
     const { id } = params;
 
     // const product = await Product.findById(id).populate('category');
