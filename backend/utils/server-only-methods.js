@@ -156,21 +156,19 @@ export const getAllOrders = async (searchParams) => {
 
   const data = await res.json();
 
-  console.log(data);
+  if (data?.success === false) {
+    toast.info(data?.message);
+    return [];
+  }
 
-  // if (data?.success === false) {
-  //   toast.info(data?.message);
-  //   return [];
-  // }
+  if (data?.error !== undefined) {
+    ///////
+    return [];
+  }
 
-  // if (data?.error !== undefined) {
-  //   ///////
-  //   return [];
-  // }
+  if (data?.data === undefined) {
+    return notFound();
+  }
 
-  // if (data?.data === undefined) {
-  //   return notFound();
-  // }
-
-  return [];
+  return data;
 };
