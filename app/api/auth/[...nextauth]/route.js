@@ -39,8 +39,11 @@ const auth = {
 
       return baseUrl;
     },
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user, trigger }) => {
       user && (token.user = user);
+
+      console.log('trigger');
+      console.log(trigger);
 
       /****** In Development Mode, url is "/api/auth/session?update" ******/
       /****** In Production Mode, url is "/api/auth/session?update=" ******/
