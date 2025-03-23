@@ -74,7 +74,12 @@ export const AuthProvider = ({ children }) => {
 
       const data = await res.json();
 
-      if (data?.updatedUser) {
+      if (data?.success === false) {
+        toast.info(data?.message);
+        return;
+      }
+
+      if (data?.data?.updatedUser) {
         loadUser();
         setLoading(false);
       }
