@@ -8,9 +8,15 @@ import DeliveryPrice from '@/backend/models/deliveryPrice';
 
 export async function GET(req) {
   try {
+    console.log(
+      'WE ARE IN GET MY ORDERS REQUEST API AND CHECKING IS SESSION ACTIVE',
+    );
     await isAuthenticatedUser(req, NextResponse);
+    console.log('SESSION IS ACTIVE AND WE ARE CONNECTING TO DATABASE');
 
     dbConnect();
+
+    console.log('DB IS CONNECTED AND CHECKING USER EXISTENCE IN DB');
 
     const user = await User.findOne({ email: req.user.email }).select('_id');
 
@@ -24,13 +30,19 @@ export async function GET(req) {
       );
     }
 
+    console.log('USER EXISTS');
+
     const resPerPage = 2;
     const ordersCount = await Order.countDocuments({ user: user._id });
+
+    console.log('GOT ORDERS COUNT');
 
     const apiFilters = new APIFilters(
       Order.find(),
       req?.nextUrl?.pathname,
     ).pagination(resPerPage);
+
+    console.log('PAGINATION IS SET');
 
     const orders = await apiFilters.query
       .find({ user: user._id })
