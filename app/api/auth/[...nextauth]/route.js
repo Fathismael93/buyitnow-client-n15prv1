@@ -5,69 +5,64 @@ import dbConnect from '@/backend/config/dbConnect';
 import User from '@/backend/models/user';
 import { NextRequest } from 'next/server';
 
-const auth = (req) => {
-  return {
-    providers: [
-      CredentialsProvider({
-        async authorize(credentials) {
-          dbConnect();
+const auth = {
+  providers: [
+    CredentialsProvider({
+      async authorize(credentials) {
+        dbConnect();
 
-          const { email, password } = credentials;
+        const { email, password } = credentials;
 
-          const user = await User.findOne({ email }).select('+password');
+        const user = await User.findOne({ email }).select('+password');
 
-          if (!user) {
-            throw new Error('Invalid Email or Password');
-          }
-
-          const isPasswordMatched = await bcrypt.compare(
-            password,
-            user.password,
-          );
-
-          if (!isPasswordMatched) {
-            throw new Error('Invalid Email or Password');
-          }
-
-          return user;
-        },
-      }),
-    ],
-    callbacks: {
-      jwt: async ({ token, user }) => {
-        user && (token.user = user);
-
-        /****** In Development Mode, url is "/api/auth/session?update" ******/
-        /****** In Production Mode, url is "/api/auth/session?update=" ******/
-
-        console.log('Updating URL');
-        console.log(req);
-
-        if (NextRequest?.nextUrl?.pathname === '/api/auth/session?update=') {
-          const updatedUser = await User.findById(token.user._id);
-
-          token.user = updatedUser;
+        if (!user) {
+          throw new Error('Invalid Email or Password');
         }
 
-        return token;
-      },
-      session: async ({ session, token }) => {
-        session.user = token.user;
+        const isPasswordMatched = await bcrypt.compare(password, user.password);
 
-        // delete password from session
-        delete session?.user?.password;
+        if (!isPasswordMatched) {
+          throw new Error('Invalid Email or Password');
+        }
 
-        return session;
+        return user;
       },
+    }),
+  ],
+  callbacks: {
+    jwt: async ({ token, user }) => {
+      user && (token.user = user);
+
+      /****** In Development Mode, url is "/api/auth/session?update" ******/
+      /****** In Production Mode, url is "/api/auth/session?update=" ******/
+
+      // console.log('Updating URL');
+      // console.log(req);
+
+      if (NextRequest?.nextUrl?.pathname === '/api/auth/session?update=') {
+        const updatedUser = await User.findById(token.user._id);
+
+        token.user = updatedUser;
+      }
+
+      return token;
     },
-    session: {
-      strategy: 'jwt',
+    session: async ({ session, token }) => {
+      session.user = token.user;
+
+      // delete password from session
+      delete session?.user?.password;
+
+      return session;
     },
-    pages: {
-      signIn: '/login',
-    },
-    secret: process.env.NEXTAUTH_SECRET,
-  };
+  },
+  session: {
+    strategy: 'jwt',
+  },
+  pages: {
+    signIn: '/login',
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(auth);
