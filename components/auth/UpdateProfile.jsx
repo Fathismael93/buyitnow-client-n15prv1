@@ -20,7 +20,6 @@ const UpdateProfile = () => {
     if (user) {
       setName(user?.name);
       setPhone(user?.phone);
-      console.log(user?.avatar);
       if (user?.avatar?.url) {
         setAvatar(user?.avatar?.url);
       }
