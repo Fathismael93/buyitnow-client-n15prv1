@@ -170,5 +170,5 @@ export const getAllOrders = async (searchParams) => {
     return notFound();
   }
 
-  return data;
+  return data?.data;
 };
