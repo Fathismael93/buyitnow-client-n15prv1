@@ -30,20 +30,11 @@ const auth = {
     }),
   ],
   callbacks: {
-    async redirect({ url, baseUrl }) {
-      console.log('url');
-      console.log(url);
-
-      console.log('baseUrl');
-      console.log(baseUrl);
-
-      return baseUrl;
-    },
-    jwt: async ({ token, user, trigger }) => {
+    jwt: async ({ token, user }) => {
       user && (token.user = user);
 
-      console.log('trigger');
-      console.log(trigger);
+      console.log('user: ');
+      console.log(user);
 
       /****** In Development Mode, url is "/api/auth/session?update" ******/
       /****** In Production Mode, url is "/api/auth/session?update=" ******/
