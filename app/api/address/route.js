@@ -16,7 +16,13 @@ export async function GET(req) {
     const user = await User.findOne({ email: req?.user?.email }).select('_id');
 
     if (!user) {
-      return NextResponse.next(new ErrorHandler('User not found', 404));
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User not found',
+        },
+        { status: 404 },
+      );
     }
 
     const addresses = await Address.find({ user: user?._id });
@@ -41,7 +47,8 @@ export async function GET(req) {
     return NextResponse.json(
       {
         success: false,
-        message: error,
+        message: 'Something is wrong with server! Please try again later',
+        error: error,
       },
       { status: 500 },
     );

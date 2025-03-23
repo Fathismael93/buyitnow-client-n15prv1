@@ -5,7 +5,6 @@ import { notFound } from 'next/navigation';
 import mongoose from 'mongoose';
 import queryString from 'query-string';
 import { getCookieName } from '@/helpers/helpers';
-// eslint-disable-next-line no-unused-vars
 import { toast } from 'react-toastify';
 
 export const getAllProducts = async (searchParams) => {
@@ -22,9 +21,18 @@ export const getAllProducts = async (searchParams) => {
 
   const res = await fetch(`${process.env.API_URL}/api/products?${searchQuery}`);
 
-  const { data } = await res.json();
+  const data = await res.json();
 
-  return data;
+  if (data?.success === false) {
+    toast.info(data?.message);
+    return [];
+  }
+
+  if (data?.error !== undefined) {
+    ///////
+  }
+
+  return data?.data;
 };
 
 export const getProductDetails = async (id) => {
@@ -38,18 +46,20 @@ export const getProductDetails = async (id) => {
 
   const data = await res.json();
 
-  console.log(data);
+  if (data?.success === false) {
+    toast.info(data?.message);
+    return [];
+  }
 
-  // if (data?.success === false) {
-  //   toast.info(data?.message);
-  //   return [];
-  // }
+  if (data?.product === undefined) {
+    return notFound();
+  }
 
-  // if (data?.product === undefined) {
-  //   return notFound();
-  // }
+  if (data?.error !== undefined) {
+    ///////
+  }
 
-  // return data;
+  return data;
 };
 
 export const getAllAddresses = async (page) => {
@@ -65,13 +75,22 @@ export const getAllAddresses = async (page) => {
       },
     });
 
-    const { data } = await res.json();
+    const data = await res.json();
 
-    if (page === 'profile') {
-      delete data?.paymentTypes;
+    if (data?.success === false) {
+      toast.info(data?.message);
+      return [];
     }
 
-    return data;
+    if (data?.error !== undefined) {
+      ///////
+    }
+
+    if (page === 'profile') {
+      delete data?.data?.paymentTypes;
+    }
+
+    return data?.data;
     // eslint-disable-next-line no-unused-vars, no-empty
   } catch (error) {}
 };

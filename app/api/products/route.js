@@ -39,6 +39,7 @@ export async function GET(req) {
     return NextResponse.json(
       {
         success: false,
+        message: 'Something is wrong with server! Please try again later',
         error: error,
       },
       { status: 500 },

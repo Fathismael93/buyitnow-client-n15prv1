@@ -10,7 +10,7 @@ export async function GET(req, { params }) {
 
     const { id } = params;
 
-    const product = Product.findById(id).populate('category');
+    const product = await Product.findById(id).populate('category');
 
     if (!product) {
       return NextResponse.json(
@@ -40,6 +40,7 @@ export async function GET(req, { params }) {
     return NextResponse.json(
       {
         success: false,
+        message: 'Something is wrong with server! Please try again later',
         error: error,
       },
       { status: 500 },
