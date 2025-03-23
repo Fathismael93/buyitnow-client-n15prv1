@@ -21,7 +21,7 @@ const UpdateProfile = () => {
       setName(user?.name);
       setPhone(user?.phone);
       if (user?.avatar?.url) {
-        setAvatar(user?.avatar?.url);
+        setAvatar(user?.avatar?.public_id);
       }
     }
 
@@ -89,7 +89,9 @@ const UpdateProfile = () => {
                 <CldImage
                   className="w-14 h-14 rounded-full"
                   src={
-                    avatar.public_id ? avatar.public_id : '/images/default.png'
+                    avatar?.public_id
+                      ? avatar?.public_id
+                      : '/images/default.png'
                   }
                   width="14"
                   height="14"
