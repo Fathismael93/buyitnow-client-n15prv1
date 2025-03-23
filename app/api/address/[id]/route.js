@@ -17,9 +17,9 @@ export async function GET(req, { params }) {
       return NextResponse.json(
         {
           success: false,
-          error: 'Address not found',
+          message: 'Address not found',
         },
-        { status: 200 },
+        { status: 404 },
       );
     }
 
@@ -36,7 +36,8 @@ export async function GET(req, { params }) {
     return NextResponse.json(
       {
         success: false,
-        message: error,
+        message: 'Something is wrong with server! Please try again later',
+        error: error,
       },
       { status: 500 },
     );
@@ -59,9 +60,9 @@ export async function PUT(req, { params }) {
       return NextResponse.json(
         {
           success: false,
-          error: 'Address not found',
+          message: 'Address not found',
         },
-        { status: 200 },
+        { status: 404 },
       );
     }
 
@@ -82,7 +83,8 @@ export async function PUT(req, { params }) {
     return NextResponse.json(
       {
         success: false,
-        message: error,
+        message: 'Something is wrong with server! Please try again later',
+        error: error,
       },
       { status: 500 },
     );
@@ -103,9 +105,9 @@ export async function DELETE(req, { params }) {
       return NextResponse.json(
         {
           success: false,
-          error: 'Address not found',
+          message: 'Address not found',
         },
-        { status: 200 },
+        { status: 404 },
       );
     }
 
@@ -120,7 +122,8 @@ export async function DELETE(req, { params }) {
     return NextResponse.json(
       {
         success: false,
-        message: error,
+        message: 'Something is wrong with server! Please try again later',
+        error: error,
       },
       { status: 500 },
     );

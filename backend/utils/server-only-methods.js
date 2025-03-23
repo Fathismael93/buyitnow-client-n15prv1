@@ -57,6 +57,7 @@ export const getProductDetails = async (id) => {
 
   if (data?.error !== undefined) {
     ///////
+    return [];
   }
 
   return data;
@@ -84,6 +85,7 @@ export const getAllAddresses = async (page) => {
 
     if (data?.error !== undefined) {
       ///////
+      return [];
     }
 
     if (page === 'profile') {
@@ -111,13 +113,23 @@ export const getSingleAddress = async (id) => {
     },
   });
 
-  const { data } = await res.json();
+  const data = await res.json();
 
-  if (data?.address === undefined) {
+  if (data?.success === false) {
+    toast.info(data?.message);
+    return [];
+  }
+
+  if (data?.error !== undefined) {
+    ///////
+    return [];
+  }
+
+  if (data?.data === undefined) {
     return notFound();
   }
 
-  return data?.address;
+  return data?.data?.address;
 };
 
 export const getAllOrders = async (searchParams) => {
@@ -143,6 +155,20 @@ export const getAllOrders = async (searchParams) => {
   );
 
   const data = await res.json();
+
+  if (data?.success === false) {
+    toast.info(data?.message);
+    return [];
+  }
+
+  if (data?.error !== undefined) {
+    ///////
+    return [];
+  }
+
+  if (data?.data === undefined) {
+    return notFound();
+  }
 
   return data;
 };

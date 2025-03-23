@@ -20,7 +20,7 @@ export async function POST(req) {
       return NextResponse.json(
         {
           success: false,
-          error: 'User not found',
+          message: 'User not found',
         },
         { status: 404 },
       );
@@ -108,6 +108,8 @@ export async function POST(req) {
     } else {
       return NextResponse.json({
         success: false,
+        message:
+          'Some product where inavailable when we started the payment operation so we stopped everything!',
         data: { inavailableStockProducts },
       });
     }
@@ -115,7 +117,8 @@ export async function POST(req) {
     return NextResponse.json(
       {
         success: false,
-        message: error,
+        message: 'Something is wrong with server! Please try again later',
+        error: error,
       },
       { status: 500 },
     );

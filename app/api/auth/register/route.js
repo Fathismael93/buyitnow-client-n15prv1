@@ -22,7 +22,8 @@ export async function POST(req) {
     return NextResponse.json(
       {
         success: false,
-        message: error,
+        message: 'Something is wrong with server! Please try again later',
+        error: error,
       },
       { status: 500 },
     );

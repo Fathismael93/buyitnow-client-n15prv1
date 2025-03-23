@@ -4,7 +4,6 @@ import dbConnect from '@/backend/config/dbConnect';
 import User from '@/backend/models/user';
 import Cart from '@/backend/models/cart';
 import Product from '@/backend/models/product';
-import ErrorHandler from '@/backend/utils/errorHandler';
 import { DECREASE, INCREASE } from '@/helpers/constants';
 
 export async function GET(req) {
@@ -15,7 +14,13 @@ export async function GET(req) {
     const user = await User.findOne({ email: req.user.email }).select('_id');
 
     if (!user) {
-      return NextResponse.next(new ErrorHandler('User not found', 404));
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User not found',
+        },
+        { status: 404 },
+      );
     }
 
     let cart;
@@ -54,7 +59,8 @@ export async function GET(req) {
     return NextResponse.json(
       {
         success: false,
-        message: error,
+        message: 'Something is wrong with server! Please try again later',
+        error: error,
       },
       { status: 500 },
     );
@@ -70,10 +76,14 @@ export async function POST(req) {
     const user = await User.findOne({ email: req.user.email }).select('_id');
 
     if (!user) {
-      return NextResponse.next(new ErrorHandler('User not found', 404));
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User not found',
+        },
+        { status: 404 },
+      );
     }
-
-    console.log(req);
 
     const body = await req.json();
 
@@ -82,7 +92,8 @@ export async function POST(req) {
     if (!product) {
       return NextResponse.json(
         {
-          error: 'Product not found',
+          success: false,
+          message: 'Product not found',
         },
         { status: 404 },
       );
@@ -95,7 +106,8 @@ export async function POST(req) {
     if (quantity > product.stock) {
       return NextResponse.json(
         {
-          error: 'Product inavailable',
+          success: false,
+          message: 'Product inavailable',
         },
         { status: 404 },
       );
@@ -122,6 +134,7 @@ export async function POST(req) {
     return NextResponse.json(
       {
         success: false,
+        message: 'Something is wrong with server! Please try again later',
         error: error,
       },
       { status: 500 },
@@ -137,7 +150,13 @@ export async function PUT(req) {
     const user = await User.findOne({ email: req.user.email });
 
     if (!user) {
-      return NextResponse.next(new ErrorHandler('User not found', 404));
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User not found',
+        },
+        { status: 404 },
+      );
     }
 
     const body = await req.json();
@@ -146,7 +165,13 @@ export async function PUT(req) {
     const product = await Product.findById(productId);
 
     if (!product) {
-      return NextResponse.next(new ErrorHandler('Product not found', 404));
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Product not found',
+        },
+        { status: 404 },
+      );
     }
 
     // IF THE USER WANT TO INCREASE THE QUANTITY OF A PRODUCT IN THE CART THEN THE VALUE WILL BE INCREASE
@@ -154,7 +179,13 @@ export async function PUT(req) {
     if (body.value === INCREASE) {
       const neededQuantity = body.product.quantity + 1;
       if (neededQuantity > product.stock) {
-        return NextResponse.next(new ErrorHandler('Inavailable Quantity', 404));
+        return NextResponse.json(
+          {
+            success: false,
+            message: 'Inavailable quantity',
+          },
+          { status: 404 },
+        );
       }
 
       const updatedCart = await Cart.findByIdAndUpdate(body.product._id, {
@@ -163,10 +194,6 @@ export async function PUT(req) {
 
       if (updatedCart) {
         return NextResponse.json('Item Updated successfully');
-      } else {
-        return NextResponse.next(
-          new ErrorHandler('Unknown error! Try again later', 500),
-        );
       }
     }
 
@@ -180,17 +207,14 @@ export async function PUT(req) {
 
       if (updatedCart) {
         return NextResponse.json('Item Updated successfully');
-      } else {
-        return NextResponse.next(
-          new ErrorHandler('Unknown error! Try again later', 500),
-        );
       }
     }
   } catch (error) {
     return NextResponse.json(
       {
         success: false,
-        message: error,
+        message: 'Something is wrong with server! Please try again later',
+        error: error,
       },
       { status: 500 },
     );

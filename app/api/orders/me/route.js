@@ -18,7 +18,7 @@ export async function GET(req) {
       return NextResponse.json(
         {
           success: false,
-          error: 'User not found',
+          message: 'User not found',
         },
         { status: 404 },
       );
@@ -27,9 +27,10 @@ export async function GET(req) {
     const resPerPage = 2;
     const ordersCount = await Order.countDocuments({ user: user._id });
 
-    const apiFilters = new APIFilters(Order.find(), req.query).pagination(
-      resPerPage,
-    );
+    const apiFilters = new APIFilters(
+      Order.find(),
+      req?.nextUrl?.pathname,
+    ).pagination(resPerPage);
 
     const orders = await apiFilters.query
       .find({ user: user._id })
@@ -56,7 +57,8 @@ export async function GET(req) {
     return NextResponse.json(
       {
         success: false,
-        message: error,
+        message: 'Something is wrong with server! Please try again later',
+        error: error,
       },
       { status: 500 },
     );

@@ -27,7 +27,7 @@ export async function PUT(req) {
       return NextResponse.json(
         {
           success: false,
-          error: 'Old password is incorrect',
+          message: 'Old password is incorrect',
         },
         { status: 400 },
       );
@@ -49,7 +49,8 @@ export async function PUT(req) {
     return NextResponse.json(
       {
         success: false,
-        message: error,
+        message: 'Something is wrong with server! Please try again later',
+        error: error,
       },
       { status: 500 },
     );

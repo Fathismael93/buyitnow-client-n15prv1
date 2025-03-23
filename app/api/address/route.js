@@ -1,5 +1,4 @@
 import Address from '@/backend/models/address';
-import ErrorHandler from '@/backend/utils/errorHandler';
 import User from '@/backend/models/user';
 import PaymentType from '@/backend/models/paymentType';
 import DeliveryPrice from '@/backend/models/deliveryPrice';
@@ -64,7 +63,13 @@ export async function POST(req) {
     const user = await User.findOne({ email: req.user.email }).select('_id');
 
     if (!user) {
-      return NextResponse.next(new ErrorHandler('User not found', 404));
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User not found',
+        },
+        { status: 404 },
+      );
     }
 
     const newAddress = await req.json();
