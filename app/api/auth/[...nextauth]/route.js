@@ -5,8 +5,8 @@ import dbConnect from '@/backend/config/dbConnect';
 import User from '@/backend/models/user';
 import { NextRequest } from 'next/server';
 
-const authFunction = (req) => {
-  const auth = {
+const auth = (req) => {
+  return {
     providers: [
       CredentialsProvider({
         async authorize(credentials) {
@@ -41,7 +41,7 @@ const authFunction = (req) => {
         /****** In Production Mode, url is "/api/auth/session?update=" ******/
 
         console.log('Updating URL');
-        console.log(req.url);
+        console.log(req);
 
         if (NextRequest?.nextUrl?.pathname === '/api/auth/session?update=') {
           const updatedUser = await User.findById(token.user._id);
@@ -68,9 +68,7 @@ const authFunction = (req) => {
     },
     secret: process.env.NEXTAUTH_SECRET,
   };
-
-  return auth;
 };
 
-const handler = NextAuth(authFunction);
-export { handler as GET, handler as POST, authFunction };
+const handler = NextAuth(auth);
+export { handler as GET, handler as POST, auth };
