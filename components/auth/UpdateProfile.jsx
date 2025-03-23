@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useContext } from 'react';
-import Image from 'next/image';
-import { CldUploadWidget } from 'next-cloudinary';
+import { CldImage, CldUploadWidget } from 'next-cloudinary';
 
 import { toast } from 'react-toastify';
 
@@ -15,15 +14,14 @@ const UpdateProfile = () => {
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  // const [avatar, setAvatar] = useState('');
-  const [avatarPreview, setAvatarPreview] = useState('/images/default.png');
+  const [avatar, setAvatar] = useState();
 
   useEffect(() => {
     if (user) {
       setName(user?.name);
       setPhone(user?.phone);
       if (user?.avatar?.url) {
-        setAvatarPreview(user?.avatar?.url);
+        setAvatar(user?.avatar?.public_id);
       }
     }
 
@@ -41,16 +39,10 @@ const UpdateProfile = () => {
       const result = await profileSchema.validate({
         name,
         phone,
-        // avatar,
       });
 
       if (result) {
-        const formData = new FormData();
-        formData.set('name', name);
-        // formData.set('image', avatar);
-        formData.set('phone', phone);
-
-        updateProfile(formData);
+        updateProfile({ name, phone, avatar });
       }
     } catch (error) {
       toast.error(error);
@@ -94,11 +86,13 @@ const UpdateProfile = () => {
             <label className="block mb-1"> Avatar </label>
             <div className="mb-4 flex flex-col md:flex-row">
               <div className="flex items-center mb-4 space-x-3 mt-4 cursor-pointer md:w-1/5 lg:w-1/4">
-                <Image
+                <CldImage
                   className="w-14 h-14 rounded-full"
-                  src={avatarPreview}
-                  width={14}
-                  height={14}
+                  src={
+                    avatar.public_id ? avatar.public_id : '/images/default.png'
+                  }
+                  width="14"
+                  height="14"
                   alt="user avatar"
                 />
               </div>
@@ -106,8 +100,10 @@ const UpdateProfile = () => {
                 <CldUploadWidget
                   signatureEndpoint={`${process.env.NEXT_PUBLIC_API_URL}/api/auth/me/update/sign-cloudinary-params`}
                   onSuccess={(result) => {
-                    console.log('result from cloudinary upload widget');
-                    console.log(result);
+                    setAvatar({
+                      public_id: result?.info?.public_id,
+                      url: result?.info?.secure_url,
+                    });
                   }}
                   options={{
                     folder: 'buyitnow/avatars', // Specify the folder here
@@ -115,7 +111,11 @@ const UpdateProfile = () => {
                 >
                   {({ open }) => {
                     return (
-                      <button onClick={() => open()} type="button">
+                      <button
+                        className="px-1 py-1 text-center w-full inline-block text-blue-600 border border-blue-600 rounded-md hover:bg-blue-700"
+                        onClick={() => open()}
+                        type="button"
+                      >
                         Change profile image
                       </button>
                     );

@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const updateProfile = async (formData) => {
+  const updateProfile = async ({ name, phone, avatar }) => {
     try {
       setLoading(true);
 
@@ -64,7 +64,11 @@ export const AuthProvider = ({ children }) => {
         `${process.env.NEXT_PUBLIC_API_URL}/api/auth/me/update`,
         {
           method: 'PUT',
-          body: formData,
+          body: JSON.stringify({
+            name,
+            phone,
+            avatar,
+          }),
         },
       );
 

@@ -19,7 +19,6 @@ export const searchSchema = yup.object().shape({
 export const profileSchema = yup.object().shape({
   name: yup.string().required().min(3),
   phone: yup.number().positive().integer().required().min(6),
-  avatar: yup.string(),
 });
 
 export const addressSchema = yup.object().shape({
