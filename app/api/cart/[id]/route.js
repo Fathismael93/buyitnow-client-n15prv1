@@ -28,6 +28,7 @@ export async function DELETE(req, { params }) {
       return NextResponse.json(
         {
           success: true,
+          message: 'Item deleted from cart',
         },
         { status: 200 },
       );

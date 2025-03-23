@@ -193,7 +193,13 @@ export async function PUT(req) {
       });
 
       if (updatedCart) {
-        return NextResponse.json('Item Updated successfully');
+        return NextResponse.json(
+          {
+            success: true,
+            message: 'Cart updated',
+          },
+          { status: 200 },
+        );
       }
     }
 
@@ -206,7 +212,13 @@ export async function PUT(req) {
       });
 
       if (updatedCart) {
-        return NextResponse.json('Item Updated successfully');
+        return NextResponse.json(
+          {
+            success: true,
+            message: 'Cart updated',
+          },
+          { status: 200 },
+        );
       }
     }
   } catch (error) {

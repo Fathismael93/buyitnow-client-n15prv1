@@ -88,11 +88,7 @@ const UpdateProfile = () => {
               <div className="flex items-center mb-4 space-x-3 mt-4 cursor-pointer md:w-1/5 lg:w-1/4">
                 <CldImage
                   className="w-14 h-14 rounded-full"
-                  src={
-                    avatar?.public_id
-                      ? avatar?.public_id
-                      : '/images/default.png'
-                  }
+                  src={avatar?.public_id && avatar?.public_id}
                   width="14"
                   height="14"
                   alt="user avatar"

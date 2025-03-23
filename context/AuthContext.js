@@ -30,9 +30,14 @@ export const AuthProvider = ({ children }) => {
         },
       );
 
-      const { data } = await res.json();
+      const data = await res.json();
 
-      if (data?.user) {
+      if (data?.success === false) {
+        toast.info(data?.message);
+        return;
+      }
+
+      if (data?.data) {
         router.push('/login');
       }
     } catch (error) {
@@ -46,9 +51,6 @@ export const AuthProvider = ({ children }) => {
 
       const res = await fetch('/api/auth/session?update=');
       const data = await res.json();
-
-      console.log('data after updating');
-      console.log(data);
 
       if (data?.user) {
         setUser(data.user);
@@ -82,7 +84,7 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
-      if (data?.data?.updatedUser) {
+      if (data?.data) {
         loadUser();
         setLoading(false);
       }
@@ -109,8 +111,11 @@ export const AuthProvider = ({ children }) => {
       const data = await res.json();
 
       if (data?.success) {
-        toast.success('Password updated with success');
+        toast.success(data?.message);
         router.replace('/me');
+      } else {
+        toast.info(data?.message);
+        return;
       }
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -128,9 +133,14 @@ export const AuthProvider = ({ children }) => {
         },
       );
 
-      const { data } = await res.json();
+      const data = await res.json();
 
-      if (data) {
+      if (data?.success === false) {
+        toast.info(data?.message);
+        return;
+      }
+
+      if (data?.data) {
         router.push('/me');
       }
     } catch (error) {
@@ -148,9 +158,14 @@ export const AuthProvider = ({ children }) => {
         },
       );
 
-      const { data } = await res.json();
+      const data = await res.json();
 
-      if (data?.address) {
+      if (data?.success === false) {
+        toast.info(data?.message);
+        return;
+      }
+
+      if (data?.data) {
         setUpdated(true);
         router.replace(`/address/${id}`);
       }
@@ -168,11 +183,14 @@ export const AuthProvider = ({ children }) => {
         },
       );
 
-      const { success, message } = await res.json();
+      const data = await res.json();
 
-      if (success) {
-        toast.success(message);
+      if (data?.success) {
+        toast.success(data?.message);
         router.push('/me');
+      } else {
+        toast.info(data?.message);
+        return;
       }
     } catch (error) {
       setError(error?.response?.data?.message);
@@ -188,8 +206,12 @@ export const AuthProvider = ({ children }) => {
 
       const data = await res.json();
 
-      if (data) {
+      if (data?.success) {
+        toast.success(data?.message);
         router.push('/me');
+      } else {
+        toast.info(data?.message);
+        return;
       }
     } catch (error) {
       setError(error?.response?.data?.message);

@@ -17,11 +17,16 @@ export const CartProvider = ({ children }) => {
   const setCartToState = async () => {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`);
-      const { data, success } = await res.json();
+      const data = await res.json();
 
-      if (success) {
-        setCart(data?.cart);
-        setCartCount(data?.cartCount);
+      if (data?.success === false) {
+        toast.info(data?.message);
+        return;
+      }
+
+      if (data?.success) {
+        setCart(data?.data?.cart);
+        setCartCount(data?.data?.cartCount);
       }
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -37,9 +42,14 @@ export const CartProvider = ({ children }) => {
         }),
       });
 
-      const { data } = await res.json();
+      const data = await res.json();
 
-      if (data?.cartAdded) {
+      if (data?.success === false) {
+        toast.info(data?.message);
+        return;
+      }
+
+      if (data?.data) {
         setCartToState();
         toast.success('Product added to cart');
       }
@@ -63,9 +73,14 @@ export const CartProvider = ({ children }) => {
 
         const data = await res.json();
 
-        if (data) {
+        if (data?.success === false) {
+          toast.info(data?.message);
+          return;
+        }
+
+        if (data?.success) {
           setCartToState();
-          toast.success(data);
+          toast.success(data?.message);
           setLoading(false);
         }
       } catch (error) {
@@ -86,11 +101,16 @@ export const CartProvider = ({ children }) => {
         },
       );
 
-      const { success } = await res.json();
+      const data = await res.json();
 
-      if (success) {
+      if (data?.success === false) {
+        toast.info(data?.message);
+        return;
+      }
+
+      if (data?.success) {
         setCartToState();
-        toast.success('Produit supprimé');
+        toast.success(data?.message);
         setLoading(false);
       }
     } catch (error) {
