@@ -30,14 +30,14 @@ const auth = {
     }),
   ],
   callbacks: {
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user, req }) => {
       user && (token.user = user);
 
       /****** In Development Mode, url is "/api/auth/session?update" ******/
       /****** In Production Mode, url is "/api/auth/session?update=" ******/
 
       console.log('Updating URL');
-      console.log(NextRequest);
+      console.log(req);
 
       if (NextRequest?.nextUrl?.pathname === '/api/auth/session?update=') {
         const updatedUser = await User.findById(token.user._id);
