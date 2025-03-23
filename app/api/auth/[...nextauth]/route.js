@@ -37,7 +37,7 @@ const auth = {
       /****** In Production Mode, url is "/api/auth/session?update=" ******/
 
       console.log('Updating URL');
-      console.log(NextRequest?.nextUrl?.pathname);
+      console.log(NextRequest?.nextUrl);
 
       if (NextRequest?.nextUrl?.pathname === '/api/auth/session?update=') {
         const updatedUser = await User.findById(token.user._id);
