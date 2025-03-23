@@ -11,7 +11,9 @@ export async function GET(req, { params }) {
 
     const { id } = params;
 
-    const product = await Product.findById(id).populate('category');
+    // const product = await Product.findById(id).populate('category');
+
+    const product = false;
 
     if (!product) {
       return NextResponse.next(new ErrorHandler('Product not found', 404));
