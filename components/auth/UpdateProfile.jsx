@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useState, useEffect, useContext } from 'react';
+import Image from 'next/image';
+import { CldUploadWidget } from 'next-cloudinary';
 
 import { toast } from 'react-toastify';
 
 import AuthContext from '@/context/AuthContext';
 import { profileSchema } from '@/helpers/schemas';
-import Image from 'next/image';
 
 const UpdateProfile = () => {
   const { user, error, loading, updateProfile, clearErrors } =
@@ -14,7 +15,7 @@ const UpdateProfile = () => {
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [avatar, setAvatar] = useState('');
+  // const [avatar, setAvatar] = useState('');
   const [avatarPreview, setAvatarPreview] = useState('/images/default.png');
 
   useEffect(() => {
@@ -40,13 +41,13 @@ const UpdateProfile = () => {
       const result = await profileSchema.validate({
         name,
         phone,
-        avatar,
+        // avatar,
       });
 
       if (result) {
         const formData = new FormData();
         formData.set('name', name);
-        formData.set('image', avatar);
+        // formData.set('image', avatar);
         formData.set('phone', phone);
 
         updateProfile(formData);
@@ -54,19 +55,6 @@ const UpdateProfile = () => {
     } catch (error) {
       toast.error(error);
     }
-  };
-
-  const onChange = (e) => {
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setAvatarPreview(reader.result);
-      }
-    };
-
-    setAvatar(e.target.files[0]);
-    reader.readAsDataURL(e.target.files[0]);
   };
 
   return (
@@ -115,13 +103,24 @@ const UpdateProfile = () => {
                 />
               </div>
               <div className="md:w-2/3 lg:w-80">
-                <input
-                  name="image"
-                  className="form-control block w-full px-2 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-hidden mt-6"
-                  type="file"
-                  id="formFile"
-                  onChange={onChange}
-                />
+                <CldUploadWidget
+                  signatureEndpoint={`${process.env.NEXT_PUBLIC_API_URL}/api/auth/me/update/sign-cloudinary-params`}
+                  onSuccess={(result) => {
+                    console.log('result from cloudinary upload widget');
+                    console.log(result);
+                  }}
+                  options={{
+                    folder: 'buyitnow/avatars', // Specify the folder here
+                  }}
+                >
+                  {({ open }) => {
+                    return (
+                      <button onClick={() => open()} type="button">
+                        Change profile image
+                      </button>
+                    );
+                  }}
+                </CldUploadWidget>
               </div>
             </div>
           </div>

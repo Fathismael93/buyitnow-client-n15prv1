@@ -7,23 +7,4 @@ cloudinary.config({
   secure: true,
 });
 
-const uploads = (file, folder) => {
-  return new Promise((resolve) => {
-    cloudinary.uploader.upload(
-      file,
-      (result) => {
-        resolve({
-          public_id: result.public_id,
-          url: result.secure_url,
-        });
-      },
-
-      {
-        resource_type: 'auto',
-        folder: folder,
-      },
-    );
-  });
-};
-
-export { uploads };
+export { cloudinary };
