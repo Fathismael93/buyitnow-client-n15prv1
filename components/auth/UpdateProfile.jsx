@@ -21,7 +21,7 @@ const UpdateProfile = () => {
       setName(user?.name);
       setPhone(user?.phone);
       if (user?.avatar?.url) {
-        setAvatar(user?.avatar?.public_id);
+        setAvatar(user?.avatar?.url);
       }
     }
 
@@ -114,7 +114,7 @@ const UpdateProfile = () => {
                   {({ open }) => {
                     return (
                       <button
-                        className="px-1 py-1 text-center w-full inline-block text-blue-600 border border-blue-600 rounded-md hover:bg-blue-700"
+                        className="px-1 py-1 text-center w-full inline-block text-blue-600 border border-blue-600 rounded-md"
                         onClick={() => open()}
                         type="button"
                       >

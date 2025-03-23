@@ -22,8 +22,20 @@ export async function PUT(req) {
 
     const body = await req.json();
 
-    console.log('body from update profile');
-    console.log(body);
+    // ...THEN UPDATE USER DATA WITH NEW DATA
+
+    const updatedUser = await User.findOneAndUpdate(
+      { email: req.user.email },
+      body,
+    );
+
+    return NextResponse.json(
+      {
+        success: true,
+        data: { updatedUser },
+      },
+      { status: 200 },
+    );
   } catch (error) {
     return NextResponse.json(
       {
