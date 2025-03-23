@@ -21,7 +21,7 @@ const UpdateProfile = () => {
       setName(user?.name);
       setPhone(user?.phone);
       if (user?.avatar?.url) {
-        setAvatar(user?.avatar?.public_id);
+        setAvatar(user?.avatar?.url);
       }
     }
 
