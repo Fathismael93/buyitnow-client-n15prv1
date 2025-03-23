@@ -39,7 +39,7 @@ export async function GET(req) {
     return NextResponse.json(
       {
         success: false,
-        message: error,
+        error: error,
       },
       { status: 500 },
     );

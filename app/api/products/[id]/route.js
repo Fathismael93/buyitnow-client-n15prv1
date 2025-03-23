@@ -3,7 +3,6 @@ import dbConnect from '@/backend/config/dbConnect';
 // eslint-disable-next-line no-unused-vars
 import Category from '@/backend/models/category';
 import Product from '@/backend/models/product';
-import ErrorHandler from '@/backend/utils/errorHandler';
 
 export async function GET(req, { params }) {
   try {
@@ -17,7 +16,13 @@ export async function GET(req, { params }) {
     const product = false;
 
     if (!product) {
-      return NextResponse.next(new ErrorHandler('Product not found', 404));
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Product Not found',
+        },
+        { status: 404 },
+      );
     }
 
     const sameCategoryProducts = await Product.find({
@@ -38,7 +43,7 @@ export async function GET(req, { params }) {
     return NextResponse.json(
       {
         success: false,
-        message: error,
+        error: error,
       },
       { status: 500 },
     );
