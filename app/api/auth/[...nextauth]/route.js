@@ -3,7 +3,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import dbConnect from '@/backend/config/dbConnect';
 import User from '@/backend/models/user';
-import { NextRequest } from 'next/server';
 
 const auth = {
   providers: [
@@ -33,8 +32,8 @@ const auth = {
     jwt: async ({ token, user }) => {
       user && (token.user = user);
 
-      console.log('user: ');
-      console.log(user);
+      console.log('token.user: ');
+      console.log(token.user);
 
       /****** In Development Mode, url is "/api/auth/session?update" ******/
       /****** In Production Mode, url is "/api/auth/session?update=" ******/
@@ -42,11 +41,11 @@ const auth = {
       // console.log('Updating URL');
       // console.log(req);
 
-      if (NextRequest?.nextUrl?.pathname === '/api/auth/session?update=') {
-        const updatedUser = await User.findById(token.user._id);
+      // if (NextRequest?.nextUrl?.pathname === '/api/auth/session?update=') {
+      //   const updatedUser = await User.findById(token.user._id);
 
-        token.user = updatedUser;
-      }
+      //   token.user = updatedUser;
+      // }
 
       return token;
     },
