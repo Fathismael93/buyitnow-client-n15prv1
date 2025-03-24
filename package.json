@@ -17,6 +17,7 @@
     "cross-env": "^7.0.3",
     "mongoose": "^8.12.1",
     "next": "^15.2.2",
+    "next-auth": "^4.24.11",
     "next-cloudinary": "^6.16.0",
     "nodemailer": "^6.10.0",
     "query-string": "^9.1.1",
