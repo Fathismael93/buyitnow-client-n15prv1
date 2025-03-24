@@ -1,5 +1,12 @@
 import { NextResponse } from 'next/server';
-import { cloudinary } from '@/backend/utils/cloudinary';
+import cloudinary from 'cloudinary';
+
+cloudinary.config({
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
+});
 
 export async function POST(req) {
   const body = await req.json();
