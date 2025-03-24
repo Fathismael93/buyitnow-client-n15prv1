@@ -1,7 +1,28 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
-    }
-  }
+      "@/*": ["./*"],
+      "@app/*": ["./app/*"],
+      "@components/*": ["./components/*"],
+      "@backend/*": ["./backend/*"],
+      "@helpers/*": ["./helpers/*"],
+      "@contexts/*": ["./context/*"],
+    },
+    "jsx": "react-jsx",
+    "module": "NodeNext",
+    "target": "ES2015",
+    "moduleResolution": "nodenext",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strict": false,
+    "noEmit": true,
+    "allowJs": true
+  },
+  "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "next-env.d.ts"],
+  "exclude": ["node_modules", ".next", "out", "build"],
 }
