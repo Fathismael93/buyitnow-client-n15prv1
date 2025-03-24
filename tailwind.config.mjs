@@ -25,6 +25,11 @@ const config = {
           dark: '#c11c17',
         },
       },
+      spacing: {
+        72: '18rem',
+        84: '21rem',
+        96: '24rem',
+      },
       fontFamily: {
         sans: [
           'Inter',
@@ -117,6 +122,7 @@ const config = {
       pattern: /^(bg|text|border)-(primary|secondary|success|danger)/,
     },
   ],
+  mode: 'jit',
 };
 
 export default config;
