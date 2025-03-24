@@ -1,4 +1,4 @@
-import ErrorHandler from '../utils/errorHandler';
+import { NextResponse } from 'next/server';
 
 export default (err, _req, res) => {
   let error = { ...err };
@@ -8,12 +8,12 @@ export default (err, _req, res) => {
 
   if (err.name == 'ValidationError') {
     const message = Object.values(err.errors).map((value) => value.message);
-    error = new ErrorHandler(message, 400);
+    error = NextResponse.error(message, 400);
   }
 
   if (err.code == 11000) {
     const message = `Duplicate ${Object.keys(err.keyValue)} entered`;
-    error = new ErrorHandler(message, 400);
+    error = NextResponse.error(message, 400);
   }
 
   return res.status(error.statusCode).json({
