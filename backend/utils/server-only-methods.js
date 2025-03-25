@@ -22,12 +22,12 @@ export const getAllProducts = async (searchParams) => {
     console.log('urlParams for filtering and pagination');
 
     const urlParams = {
-      keyword: (await searchParams).keyword,
-      page: (await searchParams).page,
-      category: (await searchParams).category,
-      'price[gte]': (await searchParams).min,
-      'price[lte]': (await searchParams).max,
-      'ratings[gte]': (await searchParams).ratings,
+      keyword: (await searchParams).keyword || '',
+      page: (await searchParams).page || '',
+      category: (await searchParams).category || '',
+      'price[gte]': (await searchParams).min || '',
+      'price[lte]': (await searchParams).max || '',
+      'ratings[gte]': (await searchParams).ratings || '',
     };
 
     console.log('Stringify urlParams');
