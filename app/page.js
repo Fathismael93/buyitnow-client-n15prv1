@@ -16,7 +16,8 @@ const HomePage = async ({ searchParams }) => {
   await getAllProducts(await searchParams)
     .then((result) => {
       console.log('result in products page: ');
-      console.log(result);
+      const data = result.json();
+      console.log(data);
     })
     .catch((error) => {
       console.log('error in products page: ');
