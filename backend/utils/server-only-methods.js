@@ -56,7 +56,7 @@ export const getAllProducts = async (searchParams) => {
 
     const apiFilters = new APIFilters(
       Product.find(),
-      searchQuery ? searchQuery : '',
+      searchQuery ? searchQuery : 'empty',
     )
       .search()
       .filter();
