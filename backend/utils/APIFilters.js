@@ -7,6 +7,9 @@ class APIFilters {
   }
 
   search() {
+    console.log('QueryString: ');
+    console.log(this.queryStr);
+
     const keyword = this.queryStr.get('keyword')
       ? {
           name: {
@@ -15,6 +18,9 @@ class APIFilters {
           },
         }
       : {};
+
+    console.log('Query: ');
+    console.log(this.query);
 
     this.query = this.query.find({ ...keyword });
     return this;
