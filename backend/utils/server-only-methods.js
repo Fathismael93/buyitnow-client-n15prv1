@@ -9,7 +9,7 @@ import { getCookieName } from '@/helpers/helpers';
 import { toast } from 'react-toastify';
 import dbConnect from '@/backend/config/dbConnect';
 import Product from '@/backend/models/product';
-import Category from '@/backend/models/category';
+// import Category from '@/backend/models/category';
 import APIFilters from '@/backend/utils/APIFilters';
 
 export const getAllProducts = async (searchParams) => {
@@ -47,7 +47,7 @@ export const getAllProducts = async (searchParams) => {
     console.log(urlParams);
 
     const searchQuery = queryString.stringify(urlParams);
-    const resPerPage = 2;
+    // const resPerPage = 2;
 
     console.log('searchQuery: ');
     console.log(searchQuery);
@@ -63,35 +63,46 @@ export const getAllProducts = async (searchParams) => {
 
     console.log('get products filtered or searched');
 
-    let products = await apiFilters.query.populate('category');
-    const filteredProductsCount = products.length;
+    await apiFilters.query
+      .populate('category')
+      .then((result) => {
+        console.log('result in products page: ');
+        const data = result.json();
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log('error in products page: ');
+        console.log(error);
+      });
 
-    console.log('Pagination');
+    // const filteredProductsCount = products.length;
 
-    apiFilters.pagination(resPerPage);
+    // console.log('Pagination');
 
-    products = await apiFilters.query.populate('category').clone();
+    // apiFilters.pagination(resPerPage);
 
-    const result = filteredProductsCount / resPerPage;
-    const totalPages = Number.isInteger(result) ? result : Math.ceil(result);
+    // products = await apiFilters.query.populate('category').clone();
 
-    console.log('Getting Category products');
+    // const result = filteredProductsCount / resPerPage;
+    // const totalPages = Number.isInteger(result) ? result : Math.ceil(result);
 
-    const categories = await Category.find();
+    // console.log('Getting Category products');
 
-    console.log('Returning prodcuts and categories');
+    // const categories = await Category.find();
 
-    return NextResponse.json(
-      {
-        success: true,
-        data: {
-          categories,
-          totalPages,
-          products,
-        },
-      },
-      { status: 200 },
-    );
+    // console.log('Returning prodcuts and categories');
+
+    // return NextResponse.json(
+    //   {
+    //     success: true,
+    //     data: {
+    //       categories,
+    //       totalPages,
+    //       products,
+    //     },
+    //   },
+    //   { status: 200 },
+    // );
   } catch (error) {
     return NextResponse.error(
       {
