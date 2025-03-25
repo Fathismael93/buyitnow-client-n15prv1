@@ -9,8 +9,8 @@ class APIFilters {
   }
 
   search() {
-    console.log('QueryString in search method: ');
-    console.log(this.queryStr);
+    console.log('Query: ');
+    console.log(this.query);
 
     console.log(
       this.queryStr !== undefined
@@ -27,8 +27,8 @@ class APIFilters {
         }
       : {};
 
-    console.log('Query: ');
-    console.log(this.query);
+    console.log('keyword: ');
+    console.log(keyword);
 
     this.query = this.query.find({ ...keyword });
     return this;
