@@ -12,6 +12,8 @@ class APIFilters {
     console.log('QueryString in search method: ');
     console.log(this.queryStr);
 
+    console.log(this.queryStr.get('keyword'));
+
     const keyword = this.queryStr.get('keyword')
       ? {
           name: {
