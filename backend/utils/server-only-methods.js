@@ -2,37 +2,69 @@ import 'server-only';
 
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
+import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import queryString from 'query-string';
 import { getCookieName } from '@/helpers/helpers';
 import { toast } from 'react-toastify';
+import dbConnect from '@/backend/config/dbConnect';
+import Product from '@/backend/models/product';
+import Category from '@/backend/models/category';
+import APIFilters from '@/backend/utils/APIFilters';
 
 export const getAllProducts = async (searchParams) => {
-  const urlParams = {
-    keyword: (await searchParams).keyword,
-    page: (await searchParams).page,
-    category: (await searchParams).category,
-    'price[gte]': (await searchParams).min,
-    'price[lte]': (await searchParams).max,
-    'ratings[gte]': (await searchParams).ratings,
-  };
+  try {
+    dbConnect();
 
-  const searchQuery = queryString.stringify(urlParams);
+    const urlParams = {
+      keyword: (await searchParams).keyword,
+      page: (await searchParams).page,
+      category: (await searchParams).category,
+      'price[gte]': (await searchParams).min,
+      'price[lte]': (await searchParams).max,
+      'ratings[gte]': (await searchParams).ratings,
+    };
 
-  const res = await fetch(`${process.env.API_URL}/api/products?${searchQuery}`);
+    const searchQuery = queryString.stringify(urlParams);
+    const resPerPage = 2;
 
-  const data = await res.json();
+    const apiFilters = new APIFilters(Product.find(), searchQuery)
+      .search()
+      .filter();
 
-  if (data?.success === false) {
-    toast.info(data?.message);
-    return [];
+    let products = await apiFilters.query.populate('category');
+    const filteredProductsCount = products.length;
+
+    apiFilters.pagination(resPerPage);
+
+    products = await apiFilters.query.populate('category').clone();
+
+    const result = filteredProductsCount / resPerPage;
+    const totalPages = Number.isInteger(result) ? result : Math.ceil(result);
+
+    const categories = await Category.find();
+
+    return NextResponse.json(
+      {
+        success: true,
+        data: {
+          categories,
+          totalPages,
+          products,
+        },
+      },
+      { status: 200 },
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Something is wrong with server! Please try again later',
+        error: error,
+      },
+      { status: 500 },
+    );
   }
-
-  if (data?.error !== undefined) {
-    ///////
-  }
-
-  return data?.data;
 };
 
 export const getProductDetails = async (id) => {
