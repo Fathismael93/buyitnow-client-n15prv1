@@ -13,18 +13,9 @@ export const metadata = {
 
 // eslint-disable-next-line react/prop-types
 const HomePage = async ({ searchParams }) => {
-  await getAllProducts(await searchParams)
-    .then((result) => {
-      console.log('result in products page: ');
-      const data = result.json();
-      console.log(data);
-    })
-    .catch((error) => {
-      console.log('error in products page: ');
-      console.log(error);
-    });
+  const productsData = await getAllProducts(await searchParams);
 
-  return <ListProducts data={[]} />;
+  return <ListProducts data={productsData} />;
 };
 
 export default HomePage;
