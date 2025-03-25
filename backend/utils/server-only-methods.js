@@ -2,117 +2,37 @@ import 'server-only';
 
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
-import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import queryString from 'query-string';
 import { getCookieName } from '@/helpers/helpers';
 import { toast } from 'react-toastify';
-import dbConnect from '@/backend/config/dbConnect';
-import Product from '@/backend/models/product';
-// import Category from '@/backend/models/category';
-import APIFilters from '@/backend/utils/APIFilters';
 
 export const getAllProducts = async (searchParams) => {
-  try {
-    console.log(
-      'WE ARE IN THE BEGINNING OF getAllProducts and connecting database',
-    );
-    dbConnect();
+  const urlParams = {
+    keyword: (await searchParams).keyword,
+    page: (await searchParams).page,
+    category: (await searchParams).category,
+    'price[gte]': (await searchParams).min,
+    'price[lte]': (await searchParams).max,
+    'ratings[gte]': (await searchParams).ratings,
+  };
 
-    console.log('urlParams for filtering and pagination');
+  const searchQuery = queryString.stringify(urlParams);
 
-    let urlParams = {};
+  const res = await fetch(`${process.env.API_URL}/api/products?${searchQuery}`);
 
-    if ((await searchParams).keyword !== undefined) {
-      urlParams = { keyword: (await searchParams).keyword, ...urlParams };
-    }
+  const data = await res.json();
 
-    if ((await searchParams).page !== undefined) {
-      urlParams = { page: (await searchParams).page, ...urlParams };
-    }
-
-    if ((await searchParams).category !== undefined) {
-      urlParams = { category: (await searchParams).category, ...urlParams };
-    }
-
-    // const urlParams = {
-    //   keyword: (await searchParams).keyword,
-    //   page: (await searchParams).page,
-    //   category: (await searchParams).category,
-    //   'price[gte]': (await searchParams).min,
-    //   'price[lte]': (await searchParams).max,
-    // };
-
-    console.log('Stringify urlParams');
-    console.log(urlParams);
-
-    const searchQuery = queryString.stringify(urlParams);
-    // const resPerPage = 2;
-
-    console.log('searchQuery: ');
-    console.log(searchQuery);
-
-    console.log('Instantiate APIfilter');
-
-    const apiFilters = new APIFilters(
-      Product.find(),
-      searchQuery ? searchQuery : 'empty',
-    )
-      .search()
-      .filter();
-
-    console.log('get products filtered or searched');
-
-    await apiFilters.query
-      .populate('category')
-      .then((result) => {
-        console.log('result in getAllProducts: ');
-        const data = result.json();
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log('error in getAllProducts: ');
-        console.log(error);
-      });
-
-    // const filteredProductsCount = products.length;
-
-    // console.log('Pagination');
-
-    // apiFilters.pagination(resPerPage);
-
-    // products = await apiFilters.query.populate('category').clone();
-
-    // const result = filteredProductsCount / resPerPage;
-    // const totalPages = Number.isInteger(result) ? result : Math.ceil(result);
-
-    // console.log('Getting Category products');
-
-    // const categories = await Category.find();
-
-    // console.log('Returning prodcuts and categories');
-
-    // return NextResponse.json(
-    //   {
-    //     success: true,
-    //     data: {
-    //       categories,
-    //       totalPages,
-    //       products,
-    //     },
-    //   },
-    //   { status: 200 },
-    // );
-  } catch (error) {
-    return NextResponse.error(
-      {
-        success: false,
-        message: 'Something is wrong with server! Please try again later',
-        error: error,
-      },
-      { status: 500 },
-    );
+  if (data?.success === false) {
+    toast.info(data?.message);
+    return [];
   }
+
+  if (data?.error !== undefined) {
+    ///////
+  }
+
+  return data?.data;
 };
 
 export const getProductDetails = async (id) => {

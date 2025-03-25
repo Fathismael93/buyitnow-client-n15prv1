@@ -4,20 +4,9 @@ class APIFilters {
   constructor(query, queryStr) {
     this.query = query;
     this.queryStr = queryStr;
-    console.log('QueryString: ');
-    console.log(queryStr);
   }
 
   search() {
-    console.log('Query: ');
-    console.log(this.query);
-
-    console.log(
-      this.queryStr !== undefined
-        ? this.queryStr.get('keyword')
-        : 'queryStr is undefined',
-    );
-
     const keyword = this.queryStr.get('keyword')
       ? {
           name: {
@@ -26,9 +15,6 @@ class APIFilters {
           },
         }
       : {};
-
-    console.log('keyword: ');
-    console.log(keyword);
 
     this.query = this.query.find({ ...keyword });
     return this;
