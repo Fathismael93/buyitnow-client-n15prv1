@@ -14,7 +14,12 @@ import APIFilters from '@/backend/utils/APIFilters';
 
 export const getAllProducts = async (searchParams) => {
   try {
+    console.log(
+      'WE ARE IN THE BEGINNING OF getAllProducts and connecting database',
+    );
     dbConnect();
+
+    console.log('urlParams for filtering and pagination');
 
     const urlParams = {
       keyword: (await searchParams).keyword,
@@ -25,15 +30,23 @@ export const getAllProducts = async (searchParams) => {
       'ratings[gte]': (await searchParams).ratings,
     };
 
+    console.log('Stringify urlParams');
+
     const searchQuery = queryString.stringify(urlParams);
     const resPerPage = 2;
+
+    console.log('Instantiate APIfilter');
 
     const apiFilters = new APIFilters(Product.find(), searchQuery)
       .search()
       .filter();
 
+    console.log('get products filtered or searched');
+
     let products = await apiFilters.query.populate('category');
     const filteredProductsCount = products.length;
+
+    console.log('Pagination');
 
     apiFilters.pagination(resPerPage);
 
@@ -42,7 +55,11 @@ export const getAllProducts = async (searchParams) => {
     const result = filteredProductsCount / resPerPage;
     const totalPages = Number.isInteger(result) ? result : Math.ceil(result);
 
+    console.log('Getting Category products');
+
     const categories = await Category.find();
+
+    console.log('Returning prodcuts and categories');
 
     return NextResponse.json(
       {
