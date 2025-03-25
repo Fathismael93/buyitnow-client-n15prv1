@@ -66,12 +66,12 @@ export const getAllProducts = async (searchParams) => {
     await apiFilters.query
       .populate('category')
       .then((result) => {
-        console.log('result in products page: ');
+        console.log('result in getAllProducts: ');
         const data = result.json();
         console.log(data);
       })
       .catch((error) => {
-        console.log('error in products page: ');
+        console.log('error in getAllProducts: ');
         console.log(error);
       });
 
