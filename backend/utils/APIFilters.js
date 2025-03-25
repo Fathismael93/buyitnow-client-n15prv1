@@ -12,7 +12,11 @@ class APIFilters {
     console.log('QueryString in search method: ');
     console.log(this.queryStr);
 
-    console.log(this.queryStr.get('keyword'));
+    console.log(
+      this.queryStr !== undefined
+        ? this.queryStr.get('keyword')
+        : 'queryStr is undefined',
+    );
 
     const keyword = this.queryStr.get('keyword')
       ? {
