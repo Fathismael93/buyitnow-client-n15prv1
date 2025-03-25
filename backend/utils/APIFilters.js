@@ -4,10 +4,12 @@ class APIFilters {
   constructor(query, queryStr) {
     this.query = query;
     this.queryStr = queryStr;
+    console.log('QueryString: ');
+    console.log(queryStr);
   }
 
   search() {
-    console.log('QueryString: ');
+    console.log('QueryString in search method: ');
     console.log(this.queryStr);
 
     const keyword = this.queryStr.get('keyword')
