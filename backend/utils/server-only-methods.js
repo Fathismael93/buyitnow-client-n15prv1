@@ -56,7 +56,7 @@ export const getAllProducts = async (searchParams) => {
       { status: 200 },
     );
   } catch (error) {
-    return NextResponse.json(
+    return NextResponse.error(
       {
         success: false,
         message: 'Something is wrong with server! Please try again later',
