@@ -54,7 +54,10 @@ export const getAllProducts = async (searchParams) => {
 
     console.log('Instantiate APIfilter');
 
-    const apiFilters = new APIFilters(Product.find(), searchQuery)
+    const apiFilters = new APIFilters(
+      Product.find(),
+      searchQuery ? searchQuery : '',
+    )
       .search()
       .filter();
 
