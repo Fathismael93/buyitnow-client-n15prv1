@@ -31,9 +31,13 @@ export const getAllProducts = async (searchParams) => {
     };
 
     console.log('Stringify urlParams');
+    console.log(urlParams);
 
     const searchQuery = queryString.stringify(urlParams);
     const resPerPage = 2;
+
+    console.log('searchQuery: ');
+    console.log(searchQuery);
 
     console.log('Instantiate APIfilter');
 
