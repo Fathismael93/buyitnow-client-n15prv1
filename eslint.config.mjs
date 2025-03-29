@@ -5,12 +5,10 @@ import globals from 'globals';
 import js from '@eslint/js';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
-import jestPlugin from 'eslint-plugin-jest';
-import jestDomPlugin from 'eslint-plugin-jest-dom';
-import testingLibraryPlugin from 'eslint-plugin-testing-library';
 import securityPlugin from 'eslint-plugin-security';
 import importPlugin from 'eslint-plugin-import';
 import optimizeRegexPlugin from 'eslint-plugin-optimize-regex';
+import prettierPlugin from 'eslint-plugin-prettier';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -28,9 +26,6 @@ const eslintConfig = [
     'plugin:react/recommended',
     'plugin:prettier/recommended',
     'next/core-web-vitals',
-    'plugin:jest/recommended',
-    'plugin:jest-dom/recommended',
-    'plugin:testing-library/react',
     'plugin:react-hooks/recommended',
     'plugin:security/recommended',
   ),
@@ -55,12 +50,10 @@ const eslintConfig = [
     plugins: {
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
-      jest: jestPlugin,
-      'jest-dom': jestDomPlugin,
-      'testing-library': testingLibraryPlugin,
       security: securityPlugin,
       import: importPlugin,
       'optimize-regex': optimizeRegexPlugin,
+      prettier: prettierPlugin,
     },
     rules: {
       'react/react-in-jsx-scope': 0,
@@ -79,6 +72,7 @@ const eslintConfig = [
       'optimize-regex/optimize-regex': 'warn',
       'react/no-array-index-key': 'error',
       'react/forbid-dom-props': ['warn', { forbid: ['style'] }],
+      'prettier/prettier': 'error',
       'import/order': [
         'error',
         {
@@ -103,16 +97,6 @@ const eslintConfig = [
       },
       react: {
         version: 'detect',
-      },
-    },
-  },
-
-  // Configuration spécifique pour les fichiers de test
-  {
-    files: ['**/*.test.js', '**/*.test.jsx'],
-    languageOptions: {
-      globals: {
-        ...globals.jest,
       },
     },
   },
